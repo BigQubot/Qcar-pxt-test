@@ -1,0 +1,18 @@
+{
+    "qcar|block": "Qcar",
+    "qcar.Ultrasonic|block": "超声波距离|%unit",
+    "qcar.Patrol.PatrolLeft|block": "左侧",
+    "qcar.Patrol.PatrolRight|block": "右侧",
+    "qcar.Patrol1.PatrolLeft|block":"左侧",
+    "qcar.Patrol1.PatrolRight|block":"右侧",
+    "qcar.Voltage.High|block":"高",
+    "qcar.Voltage.Low|block":"低",
+    "qcar.ltEvent|block":"当|%value巡线传感器|%vi",
+    "qcar.readPatrol|block": "巡线传感器|%patrol",
+    "qcar.IREnable|block": "将红外设置为|%output",
+    "qcar.irstatus.iron|block": "开启",
+    "qcar.irstatus.iroff|block": "关闭",
+    "qcar.writeLED|block": "将LED灯|%ledswitch",
+    "qcar.LEDswitch.turnOn|block": "打开",
+    "qcar.LEDswitch.turnOff|block": "关闭",
+}
