@@ -118,13 +118,5 @@ namespace qcar {
    }
     
 
-    /**
-     * Do something if the alarm is triggered
-     */
-    //% blockId=kb_event block="on alarm trigger"
-    //% weight=25 blockGap=8
-    export function onAlarmTrigger(alarmTriggerHandler: Action): void {
-        alarmHandler = alarmTriggerHandler
-    }
 
 }
