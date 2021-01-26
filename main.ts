@@ -17,6 +17,14 @@ namespace qcar {
         PatrolRight = 1
     }
 
+    export enum Patrol1 {
+        //% blockId="patrolLeft" block="left"
+        PatrolLeft = 20,
+        //% blockId="patrolRight" block="right"
+        PatrolRight = 10
+    }
+
+
     export enum irstatus {
         //% blockId="iron" block="on"
         iron = 1,
@@ -93,5 +101,14 @@ namespace qcar {
         } 
     }
 
-
+     /**
+     * Line tracking sensor event function
+     */
+    //% weight=2
+    //% blockId=kb_event block="on|%value line tracking sensor|%vi"
+    export function ltEvent(value: Patrol1, angle: number) {
+        let state = value + vi;
+        serial.writeNumber(state)
+   }
+    
 }
