@@ -9,6 +9,7 @@ enum PingUnit {
 
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
+    public number;
 
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
@@ -112,8 +113,7 @@ namespace qcar {
      */
     //% weight=2
     //% blockId=kb_event block="on|%value line tracking sensor |%vi"
-    //% vi.min=0 vi.max=180
-    export function ltEvent(value: Patrol1, vi: Voltage) : void {
+    export function ltEvent(value: Patrol1, vi: number) : void {
         let state = value + vi;
         serial.writeNumber(state)
    }
