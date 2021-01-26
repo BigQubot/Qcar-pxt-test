@@ -15,5 +15,4 @@
     "qcar.writeLED|block": "将LED灯|%ledswitch",
     "qcar.LEDswitch.turnOn|block": "打开",
     "qcar.LEDswitch.turnOff|block": "关闭",
-    "maqueen.IR_callbackUser|block": "当接收到红外时运行",
 }
