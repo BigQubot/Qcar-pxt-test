@@ -112,7 +112,8 @@ namespace qcar {
      */
     //% weight=2
     //% blockId=kb_event block="on|%value line tracking sensor |%vi"
-    export function ltEvent(value: Patrol1, vi: Voltage, a: Action) : void {
+    //% vi.min=0 vi.max=180
+    export function ltEvent(value: Patrol1, vi: Voltage) : void {
         let state = value + vi;
         serial.writeNumber(state)
    }
