@@ -24,6 +24,12 @@ namespace qcar {
         PatrolRight = 10
     }
 
+    export enum Voltage {
+        //%block="high"
+        High = 0x01,
+        //% block="low"
+        Low = 0x00
+    }
 
     export enum irstatus {
         //% blockId="iron" block="on"
@@ -105,10 +111,20 @@ namespace qcar {
      * Line tracking sensor event function
      */
     //% weight=2
-    //% blockId=kb_event block="on|%value line tracking sensor|%vi"
-    export function ltEvent(value: Patrol1, angle: number ) : void {
+    //% blockId=kb_event block="on|%value line tracking sensor |%vi"
+    export function ltEvent(value: Patrol1, vi: Voltage, a: Action) : void {
         let state = value + vi;
         serial.writeNumber(state)
    }
     
+
+    /**
+     * Do something if the alarm is triggered
+     */
+    //% blockId=kb_event block="on alarm trigger"
+    //% weight=25 blockGap=8
+    export function onAlarmTrigger(alarmTriggerHandler: Action): void {
+        alarmHandler = alarmTriggerHandler
+    }
+
 }
