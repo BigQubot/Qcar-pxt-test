@@ -9,7 +9,6 @@ enum PingUnit {
 
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
-    public number;
 
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
@@ -102,6 +101,17 @@ namespace qcar {
         } 
     }
 
+     /**
+     * Line tracking sensor event function
+     */
+    //% weight=2
+    //% blockId=kb_event block="on|%value line tracking sensor |%angle"
+    //% vi.min=0 vi.max=180
+    export function ltEvent(value: Patrol1, vi: angle): void {
+        let state = value + vi;
+        serial.writeNumber(state)
+   }
+    
 /**
  * Repeats the code forever in the background. On each iteration, allows other codes to run.
  * @param body code to execute
@@ -109,7 +119,5 @@ namespace qcar {
 function forever(a: () => void): void {
     basic.forever(a);
 }
-    
-
 
 }
