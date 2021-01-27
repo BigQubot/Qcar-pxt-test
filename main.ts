@@ -124,13 +124,7 @@ namespace qcar {
         }
     }
     basic.pause(50);
+})
     
-/**
- * Repeats the code forever in the background. On each iteration, allows other codes to run.
- * @param body code to execute
- */
-function forever(a: () => void): void {
-    basic.forever(a);
-}
 
 }
