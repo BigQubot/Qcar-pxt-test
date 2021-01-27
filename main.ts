@@ -111,6 +111,19 @@ namespace qcar {
         let state = value + angle;
         serial.writeNumber(state)
    }
+
+   basic.forever(() => {
+    if (kbCallback != null) {
+        let sta = patorlState();
+        if (sta != 0) {
+            for (let item of kbCallback) {
+                if (item.key == sta) {
+                    item.action();
+                }
+            }
+        }
+    }
+    basic.pause(50);
     
 /**
  * Repeats the code forever in the background. On each iteration, allows other codes to run.
