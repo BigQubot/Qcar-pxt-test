@@ -107,8 +107,8 @@ namespace qcar {
     //% weight=2
     //% blockId=kb_event block="on|%value line tracking sensor |%angle"
     //% angle.min=0 angle.max=180
-    export function ltEvent(value: Patrol1, vi: angle): void {
-        let state = value + vi;
+    export function ltEvent(value: Patrol1, angle: number): void {
+        let state = value + angle;
         serial.writeNumber(state)
    }
     
