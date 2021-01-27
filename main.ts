@@ -9,6 +9,7 @@ enum PingUnit {
 
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
+    let state:number;
 
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
