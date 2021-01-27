@@ -109,22 +109,18 @@ namespace qcar {
     //% blockId=kb_event block="on|%value line tracking sensor |%angle"
     //% angle.min=0 angle.max=180
     export function ltEvent(value: Patrol1, angle: number): void {
-        let state = value + angle;
+        let state = 1;
         serial.writeNumber(state)
    }
 
    basic.forever(() => {
-    if (kbCallback != null) {
-        let sta = patorlState();
-        if (sta != 0) {
-            for (let item of kbCallback) {
-                if (item.key == sta) {
-                    item.action();
-                }
-            }
+    if(state == 1){
+        let state1 = 22;
+        serial.writeNumber(state1)
         }
     }
-    basic.pause(50);
+    
+    basic.pause(20);
 })
     
 
