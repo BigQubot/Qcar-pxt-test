@@ -33,6 +33,15 @@ namespace qcar {
         iroff = 2
     }
 
+    export enum RGBLights {
+        //% blockId="Right_RGB" block="Right_RGB"
+        RGB_L = 1,
+        //% blockId="Left_RGB" block="Left_RGB"
+        RGB_R = 0,
+        //% blockId="ALL" block="ALL"
+        ALL = 3
+    }
+
     /**
      * Read ultrasonic sensor.
      */
@@ -85,42 +94,53 @@ namespace qcar {
         }
     }
 
+    /**
+    * Read Motor Speed.
+    */
+
+   //% weight=10
+   //% blockId=read_Patrol block="read |%speed Motor Speed"
+   //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
+   export function Motor_Speed(speed: Speed): number {
+       if (speed == Speed.LeftSpeed) {
+           return pins.analogReadPin(AnalogPin.P2)
+       } else if (speed == Speed.RightSpeed) {
+           return pins.analogReadPin(AnalogPin.P1)
+       } else {
+           return 0
+       }
+   }
+
+   /**
+    * Enable IR LED.
+    */
+
+   //% blockId=IR_Enable block="Set the infrared status to |%irstatus"
+   //% irstatus.fieldEditor="gridpicker" irstatus.fieldOptions.columns=2 
+   //% weight=93 blockGap=8
+
+   export function IREnable(IRstatus: irstatus): void {
+       if (IRstatus == irstatus.iron) {
+           pins.digitalWritePin(DigitalPin.P14, 1)
+       } else if (IRstatus == irstatus.iroff) {
+           pins.digitalWritePin(DigitalPin.P14, 0)
+       } 
+   }
 
     /**
-     * Enable IR LED.
-     */
-
-    //% blockId=IR_Enable block="Set the infrared status to |%irstatus"
-    //% irstatus.fieldEditor="gridpicker" irstatus.fieldOptions.columns=2 
-    //% weight=93 blockGap=8
-
-    export function IREnable(IRstatus: irstatus): void {
-        if (IRstatus == irstatus.iron) {
-            pins.digitalWritePin(DigitalPin.P14, 1)
-        } else if (IRstatus == irstatus.iroff) {
-            pins.digitalWritePin(DigitalPin.P14, 0)
-        } 
-    }
-
-     /**
-     * Line tracking sensor event function
-     */
-    //% weight=2
-    //% blockId=kb_event block="on|%value line tracking sensor |%angle"
-    //% angle.min=0 angle.max=180
-    export function ltEvent(value: Patrol1, angle: number): void {
-        let state = 1;
-        serial.writeNumber(state)
+    * Line tracking sensor event function
+    */
+   //% weight=2
+   //% blockId=kb_event block="on|%value line tracking sensor|%vi"
+   export function ltEvent(value: Patrol1, vi: number) {
+        let state2 = value + vi;
+       serial.writeNumber(state2)
    }
 
    basic.forever(() => {
-    if(state == 1){
-        let state1 = 22;
-        serial.writeNumber(state1)
-        }
-    
-    basic.pause(20);
-})
-    
+       if (state != null) {
+   }
+       basic.pause(50);
+   })
 
 }
