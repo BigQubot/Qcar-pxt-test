@@ -135,7 +135,6 @@ namespace qcar {
             return LeftSpeed;
         } 
     
-    let RightSpeed:number;
        else if (speed == Speed.RightSpeed) {
         if (LastTime < 1000) {
             if ((pins.digitalReadPin(DigitalPin.P11)==1)&&(RightMotor==0)) {
