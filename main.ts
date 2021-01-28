@@ -18,6 +18,13 @@ namespace qcar {
         PatrolRight = 1
     }
 
+    export enum Speed {
+        //% blockId="lLeftSpeed" block="left"
+        LeftSpeed = 20,
+        //% blockId="patrolRight" block="right"
+        RightSpeed = 10
+    }
+
     export enum Patrol1 {
         //% blockId="patrolLeft" block="left"
         PatrolLeft = 20,
