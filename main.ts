@@ -10,6 +10,13 @@ enum PingUnit {
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
     let state:number;
+    let LeftMotor:number;
+    let RightMotor:number;
+    let LeftCount:number;
+    let RightCount:number;
+    let LastTime:number;
+    let LeftSpeed:number;
+    let RightSpeed:number;
 
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
@@ -108,14 +115,43 @@ namespace qcar {
    //% weight=10
    //% blockId=Motor_Speed block="read |%speed Motor Speed"
    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
-   export function Motor_Speed(speed: Speed): number {
-       if (speed == Speed.LeftSpeed) {
-           return pins.analogReadPin(AnalogPin.P2)
-       } else if (speed == Speed.RightSpeed) {
-           return pins.analogReadPin(AnalogPin.P1)
-       } else {
-           return 0
-       }
+    export function Motor_Speed(speed: Speed): number {
+        LeftMotor=0;
+        RightMotor=0
+        if (speed == Speed.LeftSpeed) {
+            if (LastTime < 1000) {
+                if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
+                    LeftMotor=1;
+                } 
+                if ((pins.digitalReadPin(DigitalPin.P5)==0)&&(LeftMotor==1)) {
+                    LeftCount++;
+                    LeftMotor=0;
+                } 
+            }
+            else if (LastTime < 1000) {
+                LeftSpeed=(LeftCount/12)*60;
+                LastTime=0;
+            }
+            return LeftSpeed;
+        } 
+    
+    let RightSpeed:number;
+       else if (speed == Speed.RightSpeed) {
+        if (LastTime < 1000) {
+            if ((pins.digitalReadPin(DigitalPin.P11)==1)&&(RightMotor==0)) {
+                RightMotor=1;
+            } 
+            if ((pins.digitalReadPin(DigitalPin.P11)==0)&&(RightMotor==1)) {
+                RightCount++;
+                RightMotor=0;
+            } 
+        }
+        else if (LastTime < 1000) {
+            RightSpeed=(RightCount/12)*60;
+            LastTime=0;
+        }
+        return RightSpeed;
+    } 
    }
 
    /**
@@ -149,5 +185,11 @@ namespace qcar {
    }
        basic.pause(50);
    })
-
+/**
+ * Pause for the specified time in milliseconds
+ * @param ms how long to pause for, eg: 100, 200, 500, 1000, 2000
+ */
+function pause(ms: number): void {
+    basic.pause(ms);
+}
 }
