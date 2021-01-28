@@ -106,7 +106,7 @@ namespace qcar {
     */
 
    //% weight=10
-   //% blockId=read_Patrol block="read |%speed Motor Speed"
+   //% blockId=Motor_Speed block="read |%speed Motor Speed"
    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
    export function Motor_Speed(speed: Speed): number {
        if (speed == Speed.LeftSpeed) {
