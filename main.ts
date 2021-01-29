@@ -158,7 +158,9 @@ namespace qcar {
             return RightSpeed
         }
         return RightSpeed
-    } 
+    }  else {
+        return -1
+    }
    }
 
    /**
