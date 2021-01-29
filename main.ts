@@ -126,7 +126,7 @@ namespace qcar {
                     LeftMotor=0;
                 } 
             }
-            else if (LastTime < 1000) {
+            else if (LastTime > 1000) {
                 leftspeed1=(LeftCount/12)*60;
                 LastTime=0;
             }
@@ -138,19 +138,15 @@ namespace qcar {
         if (LastTime < 1000) {
             if ((pins.digitalReadPin(DigitalPin.P11)==1)&&(RightMotor==0)) {
                 RightMotor=1;
-                return rightspeed1;
             } 
             if ((pins.digitalReadPin(DigitalPin.P11)==0)&&(RightMotor==1)) {
                 RightCount++;
                 RightMotor=0;
-                return rightspeed1
             } 
-            return rightspeed1
         }
-        else if (LastTime < 1000) {
+        else if (LastTime > 1000) {
             rightspeed1=(RightCount/12)*60;
             LastTime=0;
-            return rightspeed1
         }
         return rightspeed1
     }  else {
