@@ -122,34 +122,42 @@ namespace qcar {
             if (LastTime < 1000) {
                 if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
                     LeftMotor=1;
+                    return LeftSpeed
                 } 
                 if ((pins.digitalReadPin(DigitalPin.P5)==0)&&(LeftMotor==1)) {
                     LeftCount++;
                     LeftMotor=0;
+                    return LeftSpeed
                 } 
+                return RightSpeed;
             }
             else if (LastTime < 1000) {
                 LeftSpeed=(LeftCount/12)*60;
                 LastTime=0;
+                return LeftSpeed
             }
-            return LeftSpeed
+            return RightSpeed;
         } 
     
        else if (speed == Speed.RightSpeed) {
         if (LastTime < 1000) {
             if ((pins.digitalReadPin(DigitalPin.P11)==1)&&(RightMotor==0)) {
                 RightMotor=1;
+                return RightSpeed;
             } 
             if ((pins.digitalReadPin(DigitalPin.P11)==0)&&(RightMotor==1)) {
                 RightCount++;
                 RightMotor=0;
+                return RightSpeed;
             } 
+            return RightSpeed;
         }
         else if (LastTime < 1000) {
             RightSpeed=(RightCount/12)*60;
             LastTime=0;
+            return RightSpeed;
         }
-        return RightSpeed
+        return RightSpeed;
     } 
    }
 
