@@ -108,6 +108,16 @@ namespace qcar {
         }
     }
 
+     /**
+     * runningTime.
+     */
+
+    //% weight=20
+    //% blockId=runningTime block="runningTime "
+    export function runningTime(): number {
+        return input.runningTime()
+    }
+
     /**
     * Read Motor Speed.
     */
