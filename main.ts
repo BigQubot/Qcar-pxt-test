@@ -129,6 +129,7 @@ namespace qcar {
             else if (LastTime > 1000) {
                 leftspeed1=(LeftCount/12)*60;
                 LastTime=0;
+                serial.writeNumber(leftspeed1)
             }
 
             return leftspeed1
