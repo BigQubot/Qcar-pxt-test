@@ -130,6 +130,8 @@ namespace qcar {
                 leftspeed1=(LeftCount/12)*60;
                 LastTime=0;
             }
+            
+            leftspeed1=0;
             return leftspeed1
         } 
     
@@ -151,6 +153,7 @@ namespace qcar {
             LastTime=0;
             return rightspeed1
         }
+        rightspeed1=0;
         return rightspeed1
     }  else {
         return -1
