@@ -15,8 +15,8 @@ namespace qcar {
     let LeftCount:number;
     let RightCount:number;
     let LastTime:number;
-    let LeftSpeed:number;
-    let RightSpeed:number;
+    let leftspeed1:number;
+    let rightspeed1:number;
     LeftMotor=0;
     RightMotor=0
 
@@ -28,9 +28,9 @@ namespace qcar {
     }
 
     export enum Speed {
-        //% blockId="lLeftSpeed" block="left"
+        //% blockId="SpeedLeft" block="left"
         LeftSpeed = 20,
-        //% blockId="patrolRight" block="right"
+        //% blockId="SpeedRight" block="right"
         RightSpeed = 10
     }
 
@@ -122,42 +122,38 @@ namespace qcar {
             if (LastTime < 1000) {
                 if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
                     LeftMotor=1;
-                    return LeftSpeed
                 } 
                 if ((pins.digitalReadPin(DigitalPin.P5)==0)&&(LeftMotor==1)) {
                     LeftCount++;
                     LeftMotor=0;
-                    return LeftSpeed
                 } 
-                return RightSpeed
             }
             else if (LastTime < 1000) {
-                LeftSpeed=(LeftCount/12)*60;
+                leftspeed1=(LeftCount/12)*60;
                 LastTime=0;
-                return LeftSpeed
             }
-            return RightSpeed
+            return leftspeed1
         } 
     
        else if (speed == Speed.RightSpeed) {
         if (LastTime < 1000) {
             if ((pins.digitalReadPin(DigitalPin.P11)==1)&&(RightMotor==0)) {
                 RightMotor=1;
-                return RightSpeed;
+                return rightspeed1;
             } 
             if ((pins.digitalReadPin(DigitalPin.P11)==0)&&(RightMotor==1)) {
                 RightCount++;
                 RightMotor=0;
-                return RightSpeed
+                return rightspeed1
             } 
-            return RightSpeed
+            return rightspeed1
         }
         else if (LastTime < 1000) {
-            RightSpeed=(RightCount/12)*60;
+            rightspeed1=(RightCount/12)*60;
             LastTime=0;
-            return RightSpeed
+            return rightspeed1
         }
-        return RightSpeed
+        return rightspeed1
     }  else {
         return -1
     }
