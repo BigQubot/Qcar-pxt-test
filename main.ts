@@ -17,8 +17,6 @@ namespace qcar {
     let LastTime:number;
     let leftspeed1:number;
     let rightspeed1:number;
-    LeftMotor=0;
-    RightMotor=0
 
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
@@ -118,6 +116,8 @@ namespace qcar {
    //% blockId=Motor_Speed block="read |%speed Motor Speed"
    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function Motor_Speed(speed: Speed): number {
+        LeftMotor=0;
+        RightMotor=0
         if (speed == Speed.LeftSpeed) {
             if (LastTime < 1000) {
                 if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
