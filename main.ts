@@ -129,14 +129,14 @@ namespace qcar {
                     LeftMotor=0;
                     return LeftSpeed
                 } 
-                return RightSpeed;
+                return RightSpeed
             }
             else if (LastTime < 1000) {
                 LeftSpeed=(LeftCount/12)*60;
                 LastTime=0;
                 return LeftSpeed
             }
-            return RightSpeed;
+            return RightSpeed
         } 
     
        else if (speed == Speed.RightSpeed) {
@@ -148,16 +148,16 @@ namespace qcar {
             if ((pins.digitalReadPin(DigitalPin.P11)==0)&&(RightMotor==1)) {
                 RightCount++;
                 RightMotor=0;
-                return RightSpeed;
+                return RightSpeed
             } 
-            return RightSpeed;
+            return RightSpeed
         }
         else if (LastTime < 1000) {
             RightSpeed=(RightCount/12)*60;
             LastTime=0;
-            return RightSpeed;
+            return RightSpeed
         }
-        return RightSpeed;
+        return RightSpeed
     } 
    }
 
