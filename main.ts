@@ -131,7 +131,7 @@ namespace qcar {
                 if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
                     LeftMotor=1;
                 } 
-                if ((pins.digitalReadPin(DigitalPin.P5)==0)&&(LeftMotor==1)) {
+                else if ((pins.digitalReadPin(DigitalPin.P5)==0)&&(LeftMotor==1)) {
                     LeftCount=LeftCount+1;
                     LeftMotor=0;
                 } 
@@ -149,7 +149,7 @@ namespace qcar {
             if ((pins.digitalReadPin(DigitalPin.P11)==1)&&(RightMotor==0)) {
                 RightMotor=1;
             } 
-            if ((pins.digitalReadPin(DigitalPin.P11)==0)&&(RightMotor==1)) {
+            else if ((pins.digitalReadPin(DigitalPin.P11)==0)&&(RightMotor==1)) {
                 RightCount=RightCount+1;
                 RightMotor=0;
             } 
