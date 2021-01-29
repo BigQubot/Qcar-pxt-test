@@ -109,8 +109,8 @@ namespace qcar {
    //% blockId=Motor_Speed block="read |%speed Motor Speed"
    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function Motor_Speed(speed: Speed): number {
-        let LeftMotor=0
-        let RightMotor=0
+        let LeftMotor:number = 1;
+        let RightMotor:number = 1;
         let LeftCount:number;
         let RightCount:number;
         let LastTime:number;
