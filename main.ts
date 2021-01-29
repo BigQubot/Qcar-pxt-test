@@ -10,13 +10,6 @@ enum PingUnit {
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
     let state:number;
-    let LeftMotor:number;
-    let RightMotor:number;
-    let LeftCount:number;
-    let RightCount:number;
-    let LastTime:number;
-    let leftspeed1:number;
-    let rightspeed1:number;
 
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
@@ -116,8 +109,13 @@ namespace qcar {
    //% blockId=Motor_Speed block="read |%speed Motor Speed"
    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function Motor_Speed(speed: Speed): number {
-        LeftMotor=0;
-        RightMotor=0
+        let LeftMotor=0;
+        let RightMotor=0;
+        let LeftCount:number;
+        let RightCount:number;
+        let LastTime:number;
+        let leftspeed1:number;
+        let rightspeed1:number;
         if (speed == Speed.LeftSpeed) {
             if (LastTime < 1000) {
                 if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
