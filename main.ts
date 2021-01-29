@@ -109,13 +109,13 @@ namespace qcar {
    //% blockId=Motor_Speed block="read |%speed Motor Speed"
    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function Motor_Speed(speed: Speed): number {
-        let LeftMotor:number = 1;
-        let RightMotor:number = 1;
-        let LeftCount:number;
-        let RightCount:number;
+        let LeftMotor:number = 0;
+        let RightMotor:number = 0;
+        let LeftCount:number = 0;
+        let RightCount:number = 0;
         let LastTime:number;
-        let leftspeed1:number;
-        let rightspeed1:number;
+        let leftspeed1:number = 0;
+        let rightspeed1:number = 0;
         if (speed == Speed.LeftSpeed) {
             if (LastTime < 1000) {
                 if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
