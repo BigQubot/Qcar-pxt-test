@@ -117,7 +117,7 @@ namespace qcar {
    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function Motor_Speed(speed: Speed): number {
         if (speed == Speed.LeftSpeed) {
-            if (LastTime < 1000) {
+            if ((input.runningTime()-LastTime) < 1000) {
                 if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
                     LeftMotor=1;
                 } 
@@ -126,16 +126,16 @@ namespace qcar {
                     LeftMotor=0;
                 } 
             }
-            else if (LastTime > 1000) {
+            else if ((input.runningTime()-LastTime) > 1000) {
                 leftspeed1=LeftCount*5;
-                LastTime=0;
+                LastTime=input.runningTime();
             }
 
             return leftspeed1
         } 
     
        else if (speed == Speed.RightSpeed) {
-        if (LastTime < 1000) {
+        if ((input.runningTime()-LastTime) < 1000) {
             if ((pins.digitalReadPin(DigitalPin.P11)==1)&&(RightMotor==0)) {
                 RightMotor=1;
             } 
@@ -144,9 +144,9 @@ namespace qcar {
                 RightMotor=0;
             } 
         }
-        else if (LastTime > 1000) {
+        else if ((input.runningTime()-LastTime) > 1000) {
             rightspeed1=RightCount*5;
-            LastTime=0;
+            LastTime=input.runningTime();
         }
         return rightspeed1
     }  else {
