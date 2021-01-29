@@ -127,6 +127,7 @@ namespace qcar {
                     LeftCount++;
                     LeftMotor=0;
                 } 
+                return;
             }
             else if (LastTime < 1000) {
                 LeftSpeed=(LeftCount/12)*60;
@@ -144,6 +145,7 @@ namespace qcar {
                 RightCount++;
                 RightMotor=0;
             } 
+            return;
         }
         else if (LastTime < 1000) {
             RightSpeed=(RightCount/12)*60;
