@@ -127,9 +127,8 @@ namespace qcar {
                 } 
             }
             else if (LastTime > 1000) {
-                leftspeed1=(LeftCount/12)*60;
+                leftspeed1=LeftCount*5;
                 LastTime=0;
-                serial.writeNumber(leftspeed1)
             }
 
             return leftspeed1
@@ -146,7 +145,7 @@ namespace qcar {
             } 
         }
         else if (LastTime > 1000) {
-            rightspeed1=(RightCount/12)*60;
+            rightspeed1=RightCount*5;
             LastTime=0;
         }
         return rightspeed1
