@@ -40,6 +40,12 @@ namespace qcar {
         PatrolRight = 10
     }
 
+    export enum speedstatus {
+        //% blockId="iron" block="on"
+        iron = 1,
+        //% blockId="iroff" block="off"
+        iroff = 2
+    }
 
     export enum irstatus {
         //% blockId="iron" block="on"
@@ -104,6 +110,24 @@ namespace qcar {
             return pins.analogReadPin(AnalogPin.P2)
         } else if (patrol == Patrol.PatrolRight) {
             return pins.analogReadPin(AnalogPin.P1)
+        } else {
+            return -1
+        }
+    }
+
+
+     /**
+     * Speed.
+     */
+
+    //% weight=20
+    //% blockId=Speed block="read |%Speedstatus line tracking sensor"
+    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
+    export function Speed(Speedstatus: speedstatus): number {
+        if (Speedstatus == speedstatus.iron) {
+            return pins.onPulsed(P1,1, () => { })
+        } else if (Speedstatus == speedstatus.iroff) {
+            return pins.onPulsed(P2,1, () => { })
         } else {
             return -1
         }
@@ -185,26 +209,4 @@ namespace qcar {
        } 
    }
 
-    /**
-    * Line tracking sensor event function
-    */
-   //% weight=2
-   //% blockId=kb_event block="on|%value line tracking sensor|%vi"
-   export function ltEvent(value: Patrol1, vi: number) {
-        let state2 = value + vi;
-       serial.writeNumber(state2)
-   }
-
-   basic.forever(() => {
-       if (state != null) {
-   }
-       basic.pause(50);
-   })
-/**
- * Pause for the specified time in milliseconds
- * @param ms how long to pause for, eg: 100, 200, 500, 1000, 2000
- */
-function pause(ms: number): void {
-    basic.pause(ms);
-}
 }
