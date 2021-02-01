@@ -143,7 +143,7 @@ namespace qcar {
         if (speed == Speed.LeftSpeed) {
             if ((input.runningTime()-LastTime) < 1000) {
                 if (input.onButtonPressed(Button.B, () => { })) {
-                    LeftCount=++
+                    LeftCount=LeftCount+1
                 }
             }
             else if ((input.runningTime()-LastTime) > 1000) {
@@ -154,8 +154,8 @@ namespace qcar {
         } 
         else if (speed == Speed.RightSpeed) {
             if ((input.runningTime()-LastTime) < 1000) {
-                if (input.onButtonPressed(Button.A, () => { })) {
-                    RightCount=++
+                if (input.onButtonPressed(Button.A, () => { })){
+                    RightCount=RightCount+1
                 }
             }
             else if ((input.runningTime()-LastTime) > 1000) {
