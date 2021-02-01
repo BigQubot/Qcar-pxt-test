@@ -30,6 +30,12 @@ namespace qcar {
         LeftSpeed = 20,
         //% blockId="SpeedRight" block="right"
         RightSpeed = 10
+    }  
+    export enum speedstatus {
+        //% blockId="Left1" block="left1"
+        Left = 20,
+        //% blockId="Right1" block="right1"
+        Right = 10
     }
 
 
@@ -38,13 +44,6 @@ namespace qcar {
         PatrolLeft = 20,
         //% blockId="patrolRight" block="right"
         PatrolRight = 10
-    }
-
-    export enum speedstatus {
-        //% blockId="Right" block="right"
-        Right = 1,
-        //% blockId="Left" block="left"
-        Left = 2
     }
 
     export enum irstatus {
@@ -123,7 +122,7 @@ namespace qcar {
     //% weight=20
     //% blockId=Speed block="read |%Speedstatus SPEED"
     //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
-    export function MotorSpeed(Speedstatus: speedstatus): number {
+    export function MotorSpeed(Speed: speedstatus): number {
         if (Speedstatus == speedstatus.Right) {
             if(pins.onPulsed(DigitalPin.P5,1, () => { })){
                 return 1
