@@ -42,9 +42,9 @@ namespace qcar {
 
     export enum speedstatus {
         //% blockId="iron" block="on"
-        iron = 1,
+        Right = 1,
         //% blockId="iroff" block="off"
-        iroff = 2
+        Left = 2
     }
 
     export enum irstatus {
@@ -124,7 +124,7 @@ namespace qcar {
     //% blockId=Speed block="read |%Speedstatus SPEED"
     //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function MotorSpeed(Speedstatus: speedstatus): number {
-        if (Speedstatus == speedstatus.iron) {
+        if (Speedstatus == speedstatus.Right) {
             if(pins.onPulsed(DigitalPin.P5,1, () => { })){
                 return 1
             }
@@ -132,7 +132,7 @@ namespace qcar {
                 return -1
             }
         } 
-        else if (Speedstatus == speedstatus.iroff) {
+        else if (Speedstatus == speedstatus.Left) {
             if(pins.onPulsed(DigitalPin.P11,1, () => { })){
                 return 1
             } 
