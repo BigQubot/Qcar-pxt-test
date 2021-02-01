@@ -108,20 +108,14 @@ namespace qcar {
         }
     }
 
+
      /**
      * runningTime.
      */
 
     //% weight=20
     //% blockId=runningTime block="runningTime "
-    export function runningTime(): number {
-        if (input.onPinPressed(DigitalPin.P5))
-        {
-            return 1}
-            return 2
-    }
-
-
+    function input.test(speed: Speed, body: () => void): void;
 
 
 
