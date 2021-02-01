@@ -125,7 +125,7 @@ namespace qcar {
     //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function MotorSpeed(Speedstatus: speedstatus): number {
         if (Speedstatus == speedstatus.iron) {
-            if(pins.onPulsed(DigitalPin.P1,1, () => { })){
+            if(pins.onPulsed(DigitalPin.P5,1, () => { })){
                 return 1
             }
             else {
@@ -133,7 +133,7 @@ namespace qcar {
             }
         } 
         else if (Speedstatus == speedstatus.iroff) {
-            if(pins.onPulsed(DigitalPin.P2,1, () => { })){
+            if(pins.onPulsed(DigitalPin.P11,1, () => { })){
                 return 1
             } 
             else {
