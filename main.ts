@@ -121,7 +121,7 @@ namespace qcar {
      */
 
     //% weight=20
-    //% blockId=Speed block="read |%Speedstatus line tracking sensor"
+    //% blockId=Speed block="read |%speedstatus line tracking sensor"
     //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function Speed(Speedstatus: speedstatus): number {
         if (Speedstatus == speedstatus.iron) {
