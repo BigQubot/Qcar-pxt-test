@@ -129,19 +129,19 @@ namespace qcar {
                 return 1
             }
             else {
-                return -1
+                return 2
             }
         } 
         else if (Speedstatus == speedstatus.Left) {
             if(pins.onPulsed(DigitalPin.P11,1, () => { })){
-                return 1
+                return 3
             } 
             else {
-                return -1
+                return 4
             }
         }
         else {
-            return -1
+            return 5
         }
     }
 
