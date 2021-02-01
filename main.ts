@@ -41,9 +41,9 @@ namespace qcar {
     }
 
     export enum speedstatus {
-        //% blockId="iron" block="on"
+        //% blockId="Right" block="right"
         Right = 1,
-        //% blockId="iroff" block="off"
+        //% blockId="Left" block="left"
         Left = 2
     }
 
