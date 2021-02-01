@@ -118,13 +118,13 @@ namespace qcar {
     //% blockId=tracking_sensor block="on |%speed1 line tracking sensor|%vi "
     export function tracking_sensor(value: Patrol1,vi: number, body: () => void): void
     {
-        if (speed == Speed.PatrolLeft) {
+        if (value == Patrol1.PatrolLeft) {
             if (pins.digitalReadPin(DigitalPin.P2)==1){
                 let state = value + vi;
                 serial.writeNumber(state)
             }
         }
-        if (speed == Speed.PatrolRight) {
+        if (value == Patrol1.PatrolRight) {
             if (pins.digitalReadPin(DigitalPin.P1)==1){
                 let state = value + vi;
                 serial.writeNumber(state)
