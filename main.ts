@@ -115,8 +115,12 @@ namespace qcar {
     //% weight=20
     //% blockId=runningTime block="runningTime "
     export function runningTime(): number {
-        return input.runningTime()
+        return pins.onPulsed(P5,1)
     }
+
+
+
+
 
     /**
     * Read Motor Speed.
