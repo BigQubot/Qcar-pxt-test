@@ -32,6 +32,13 @@ namespace qcar {
         RightSpeed = 10
     }
 
+    export enum Speed1 {
+        //% blockId="SpeedLeft" block="left"
+        LeftSpeed = 20,
+        //% blockId="SpeedRight" block="right"
+        RightSpeed = 10
+    }
+
     export enum Patrol1 {
         //% blockId="patrolLeft" block="left"
         PatrolLeft = 20,
@@ -115,7 +122,7 @@ namespace qcar {
 
     //% weight=20
     //% blockId=runningTime block="runningTime "
-    export function test(speed: Speed, body: () => void): void;
+    export function test(speed: Speed1, body: () => void): void;
 
 
 
