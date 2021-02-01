@@ -116,7 +116,7 @@ namespace qcar {
 
     //% weight=20
     //% blockId=tracking_sensor block="on |%speed1 line tracking sensor|%vi "
-    export function tracking_sensor(value: Patrol1,vi: number， body: () => void): void
+    export function tracking_sensor(value: Patrol1,vi: number, body: () => void): void
     {
         let state = value + vi;
        serial.writeNumber(state)
