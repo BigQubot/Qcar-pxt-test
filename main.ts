@@ -123,7 +123,7 @@ namespace qcar {
     //% blockId=Speed block="read |%Speedstatus SPEED"
     //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function MotorSpeed(Speedstatus: speedstatus): number {
-        if (Speedstatus == speedstatus.Right) {
+        if (Speedstatus == speedstatus.iron) {
             if(pins.onPulsed(DigitalPin.P5,1, () => { })){
                 return 1
             }
@@ -131,7 +131,7 @@ namespace qcar {
                 return 2
             }
         } 
-        else if (Speedstatus == speedstatus.Left) {
+        else if (Speedstatus == speedstatus.iroff) {
             if(pins.onPulsed(DigitalPin.P11,1, () => { })){
                 return 3
             } 
