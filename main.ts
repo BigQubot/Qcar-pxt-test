@@ -121,7 +121,7 @@ namespace qcar {
      */
 
     //% weight=20
-    //% blockId=runningTime block="runningTime|%speed1 "
+    //% blockId=test block="runningTime|%speed1 "
     export function test(speed: Speed1, body: () => void): void;
 
 
