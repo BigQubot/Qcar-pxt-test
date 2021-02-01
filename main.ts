@@ -118,8 +118,18 @@ namespace qcar {
     //% blockId=tracking_sensor block="on |%speed1 line tracking sensor|%vi "
     export function tracking_sensor(value: Patrol1,vi: number, body: () => void): void
     {
-        let state = value + vi;
-       serial.writeNumber(state)
+        if (speed == Speed.PatrolLeft) {
+            if (pins.digitalReadPin(DigitalPin.P2)==1){
+                let state = value + vi;
+                serial.writeNumber(state)
+            }
+        }
+        if (speed == Speed.PatrolRight) {
+            if (pins.digitalReadPin(DigitalPin.P1)==1){
+                let state = value + vi;
+                serial.writeNumber(state)
+            }
+        }
     }
 
     /**
@@ -132,41 +142,32 @@ namespace qcar {
     export function Motor_Speed(speed: Speed): number {
         if (speed == Speed.LeftSpeed) {
             if ((input.runningTime()-LastTime) < 1000) {
-                if ((pins.digitalReadPin(DigitalPin.P5)==1)&&(LeftMotor==0)) {
-                    LeftMotor=1;
-                } 
-                else if ((pins.digitalReadPin(DigitalPin.P5)==0)&&(LeftMotor==1)) {
-                    LeftCount=LeftCount+1;
-                    LeftMotor=0;
-                } 
+                if (input.onButtonPressed(Button.B, () => { })) {
+                    LeftCount=++
+                }
             }
             else if ((input.runningTime()-LastTime) > 1000) {
                 leftspeed1=LeftCount*5;
                 LastTime=input.runningTime();
             }
-
             return leftspeed1
         } 
-    
-       else if (speed == Speed.RightSpeed) {
-        if ((input.runningTime()-LastTime) < 1000) {
-            if ((pins.digitalReadPin(DigitalPin.P11)==1)&&(RightMotor==0)) {
-                RightMotor=1;
-            } 
-            else if ((pins.digitalReadPin(DigitalPin.P11)==0)&&(RightMotor==1)) {
-                RightCount=RightCount+1;
-                RightMotor=0;
-            } 
+        else if (speed == Speed.RightSpeed) {
+            if ((input.runningTime()-LastTime) < 1000) {
+                if (input.onButtonPressed(Button.A, () => { })) {
+                    RightCount=++
+                }
+            }
+            else if ((input.runningTime()-LastTime) > 1000) {
+                rightspeed1=RightCount*5;
+                LastTime=input.runningTime();
+            }
+            return rightspeed1
         }
-        else if ((input.runningTime()-LastTime) > 1000) {
-            rightspeed1=RightCount*5;
-            LastTime=input.runningTime();
+        else {
+            return -1
         }
-        return rightspeed1
-    }  else {
-        return -1
     }
-   }
 
    /**
     * Enable IR LED.
