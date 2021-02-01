@@ -115,7 +115,7 @@ namespace qcar {
     //% weight=20
     //% blockId=runningTime block="runningTime "
     export function runningTime(): number {
-        return pins.onPulsed(P5,1)
+        return pins.onPulsed(DigitalPin.P5,1)
     }
 
 
