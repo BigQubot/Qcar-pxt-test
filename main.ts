@@ -32,10 +32,10 @@ namespace qcar {
         RightSpeed = 10
     }  
     export enum speedstatus {
-        //% blockId="Left1" block="left1"
-        Left = 20,
-        //% blockId="Right1" block="right1"
-        Right = 10
+        //% blockId="iron" block="on"
+        iron = 1,
+        //% blockId="iroff" block="off"
+        iroff = 2
     }
 
 
