@@ -128,13 +128,14 @@ namespace qcar {
             if(pins.onPulsed(AnalogPin.P1,1, () => { })){
                 return 1
             }
-
-        } else if (Speedstatus == speedstatus.iroff) {
+        } 
+        else if (Speedstatus == speedstatus.iroff) {
             if(pins.onPulsed(AnalogPin.P2,1, () => { })){
                 return 1
             } 
             else {
-            return -1
+                return -1
+            }
         }
     }
 
