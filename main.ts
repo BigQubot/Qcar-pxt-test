@@ -32,12 +32,6 @@ namespace qcar {
         RightSpeed = 10
     }
 
-    export enum Speed1 {
-        //% blockId="SpeedLeft" block="left"
-        LeftSpeed = 20,
-        //% blockId="SpeedRight" block="right"
-        RightSpeed = 10
-    }
 
     export enum Patrol1 {
         //% blockId="patrolLeft" block="left"
@@ -121,10 +115,12 @@ namespace qcar {
      */
 
     //% weight=20
-    //% blockId=test block="runningTime|%speed1 "
-    export function test(speed1: Speed1, body: () => void): void;
-
-
+    //% blockId=tracking_sensor block="on |%speed1 line tracking sensor|%vi "
+    export function tracking_sensor(value: Patrol1,vi: number， body: () => void): void
+    {
+        let state = value + vi;
+       serial.writeNumber(state)
+    }
 
     /**
     * Read Motor Speed.
