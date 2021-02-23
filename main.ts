@@ -127,11 +127,17 @@ namespace qcar {
             if(pins.digitalReadPin(DigitalPin.P5)==1){
                 return 1
             }
+            else {
+                return 0
+            }
         } 
         else if (Speedstatus == speedstatus.iroff) {
             if(pins.digitalReadPin(DigitalPin.P11)==1){
                 return 3
             } 
+            else {
+                return 0
+            }
         }
         else {
             return 5
