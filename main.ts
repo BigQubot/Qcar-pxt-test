@@ -9,14 +9,47 @@ enum PingUnit {
 
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
-    let state:number;
-    let leftspeed1:number = 0;
-    let rightspeed1:number = 0;
-    let a_was_press:number = 0;
-    let b_was_press:number = 0;
-    let LeftCount:number = 0;
-    let RightCount:number = 0;
-    let LastTime:number
+
+
+    let _DEBUG: boolean = false
+    const debug = (msg: string) => {
+        if (_DEBUG === true) {
+            serial.writeLine(msg)
+        }
+    }
+    const PinRegDistance = 4
+    const channel0OnStepLowByte = 0x06 // LED0_ON_L
+    const channel0OnStepHighByte = 0x07 // LED0_ON_H
+    const channel0OffStepLowByte = 0x08 // LED0_OFF_L
+    const channel0OffStepHighByte = 0x09 // LED0_OFF_H
+    export enum PinNum {
+        Pin0 = 0,
+        Pin1 = 1,
+        Pin2 = 2,
+        Pin3 = 3,
+        Pin4 = 4,
+        Pin5 = 5,
+        Pin6 = 6,
+        Pin7 = 7,
+        Pin8 = 8,
+        Pin9 = 9,
+        Pin10 = 10,
+        Pin11 = 11,
+        Pin12 = 12,
+        Pin13 = 13,
+        Pin14 = 14,
+        Pin15 = 15,
+    }
+    function write(chipAddress: number, register: number, value: number): void {
+        const buffer = pins.createBuffer(2)
+        buffer[0] = register
+        buffer[1] = value
+        pins.i2cWriteBuffer(chipAddress, buffer, false)
+    }
+    
+
+
+
 
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
