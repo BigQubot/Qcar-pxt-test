@@ -12,8 +12,8 @@ namespace qcar {
     let state:number;
     let leftspeed1:number = 0;
     let rightspeed1:number = 0;
-    let LeftMotor:number = 0;
-    let RightMotor:number = 0;
+    let a_was_press:number = 0;
+    let b_was_press:number = 0;
     let LeftCount:number = 0;
     let RightCount:number = 0;
     let LastTime:number
@@ -176,9 +176,13 @@ namespace qcar {
    //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
     export function Motor_Speed(speed: Speed): number {
         if (speed == Speed.LeftSpeed) {
-            if ((input.runningTime()-LastTime) < 1000) {
-                if (input.onButtonPressed(Button.B, () => { })) {
-                    LeftCount=LeftCount+1
+            if ((input.runningTime()-LastTime) < 1000) 
+            {(pins.digitalReadPin(DigitalPin.P1)
+                if ((pins.digitalReadPin(DigitalPin.P1) & (a_was_press==0)) {
+                    a_was_press=1
+                }
+                if ((pins.digitalReadPin(DigitalPin.P1) & (a_was_press==0)) {
+                    a_was_press=1
                 }
             }
             else if ((input.runningTime()-LastTime) > 1000) {
@@ -188,7 +192,8 @@ namespace qcar {
             return leftspeed1
         } 
         else if (speed == Speed.RightSpeed) {
-            if ((input.runningTime()-LastTime) < 1000) {
+            if ((input.runningTime()-LastTime) < 1000) 
+            {
                 if (input.onButtonPressed(Button.A, () => { })){
                     RightCount=RightCount+1
                 }
@@ -219,5 +224,37 @@ namespace qcar {
            pins.digitalWritePin(DigitalPin.P14, 0)
        } 
    }
+
+
+    /**
+     * Used to set the pulse range (0-4095) of a given pin on the PCA9685
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
+     * @param pinNumber The pin number (0-15) to set the pulse range on
+     * @param onStep The range offset (0-4095) to turn the signal on
+     * @param offStep The range offset (0-4095) to turn the signal off
+     */
+    //% block advanced=true
+    export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = 0x40): void {
+        pinNumber = Math.max(0, Math.min(15, pinNumber))
+        const buffer = pins.createBuffer(2)
+        const pinOffset = PinRegDistance * pinNumber
+        onStep = Math.max(0, Math.min(4095, onStep))
+        offStep = Math.max(0, Math.min(4095, offStep))
+
+        debug(`setPinPulseRange(${pinNumber}, ${onStep}, ${offStep}, ${chipAddress})`)
+        debug(`  pinOffset ${pinOffset}`)
+
+        // Low byte of onStep
+        write(chipAddress, pinOffset + channel0OnStepLowByte, onStep & 0xFF)
+
+        // High byte of onStep
+        write(chipAddress, pinOffset + channel0OnStepHighByte, (onStep >> 8) & 0x0F)
+
+        // Low byte of offStep
+        write(chipAddress, pinOffset + channel0OffStepLowByte, offStep & 0xFF)
+
+        // High byte of offStep
+        write(chipAddress, pinOffset + channel0OffStepHighByte, (offStep >> 8) & 0x0F)
+    }
 
 }
