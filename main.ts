@@ -167,47 +167,7 @@ namespace qcar {
         }
     }
 
-    /**
-    * Read Motor Speed.
-    */
 
-   //% weight=10
-   //% blockId=Motor_Speed block="read |%speed Motor Speed"
-   //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
-    export function Motor_Speed(speed: Speed): number {
-        if (speed == Speed.LeftSpeed) {
-            if ((input.runningTime()-LastTime) < 1000) 
-            {(pins.digitalReadPin(DigitalPin.P1)
-                if ((pins.digitalReadPin(DigitalPin.P1) & (a_was_press==0)) {
-                    a_was_press=1
-                }
-                if ((pins.digitalReadPin(DigitalPin.P1) & (a_was_press==0)) {
-                    a_was_press=1
-                }
-            }
-            else if ((input.runningTime()-LastTime) > 1000) {
-                leftspeed1=LeftCount*5;
-                LastTime=input.runningTime();
-            }
-            return leftspeed1
-        } 
-        else if (speed == Speed.RightSpeed) {
-            if ((input.runningTime()-LastTime) < 1000) 
-            {
-                if (input.onButtonPressed(Button.A, () => { })){
-                    RightCount=RightCount+1
-                }
-            }
-            else if ((input.runningTime()-LastTime) > 1000) {
-                rightspeed1=RightCount*5;
-                LastTime=input.runningTime();
-            }
-            return rightspeed1
-        }
-        else {
-            return -1
-        }
-    }
 
    /**
     * Enable IR LED.
