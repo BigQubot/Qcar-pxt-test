@@ -327,15 +327,15 @@ namespace qcar {
         write(64, 0x0D, (0 >> 8) & 0x0F)
 
 
-        write(64, 0x0E, 0 & 0xFF)
-        write(64, 0x0E, (0 >> 8) & 0x0F)
-        write(64, 0x10, 4095 & 0xFF)
-        write(64, 0x11, (4095 >> 8) & 0x0F)
+        write(64, 0x0E, 4095 & 0xFF)
+        write(64, 0x0E, (4095 >> 8) & 0x0F)
+        write(64, 0x10, 0 & 0xFF)
+        write(64, 0x11, (0 >> 8) & 0x0F)
 
-        write(64, 0x12, 4095 & 0xFF)
-        write(64, 0x13, (4095 >> 8) & 0x0F)
-        write(64, 0x14, 0 & 0xFF)
-        write(64, 0x15, (0 >> 8) & 0x0F)
+        write(64, 0x12, 0 & 0xFF)
+        write(64, 0x13, (0 >> 8) & 0x0F)
+        write(64, 0x14, 4095 & 0xFF)
+        write(64, 0x15, (4095 >> 8) & 0x0F)
     } 
     else if (Car_Direction == Direction.back) {
     } 
