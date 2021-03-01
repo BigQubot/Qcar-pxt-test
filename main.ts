@@ -26,9 +26,13 @@ namespace qcar {
     const allChannelsOnStepHighByte = 0xFB // ALL_LED_ON_H
     const allChannelsOffStepLowByte = 0xFC // ALL_LED_OFF_L
     const allChannelsOffStepHighByte = 0xFD // ALL_LED_OFF_H
+    const modeRegister1Default = 0x01
     const modeRegister1 = 0x00 // MODE1
     const sleep = modeRegister1Default | 0x10; // Set sleep bit to 1
+    const wake = modeRegister1Default & 0xEF; // Set sleep bit to 0
+    const restart = wake | 0x80; // Set restart bit to 1
     const PrescaleReg = 0xFE //the prescale register address
+    const chipResolution = 4096;
     export enum PinNum {
         Pin0 = 0,
         Pin1 = 1,
