@@ -239,10 +239,8 @@ namespace qcar {
 
    export function Stop(): void {
     const pinOffset1 = PinRegDistance * 0
-    onStep1: number;
-    offStep1: number;
-    onStep1 = 0
-    offStep1 = 4095
+    const onStep1 = 0
+    const offStep1 = 4095
 
     // Low byte of onStep
     write(64, pinOffset1 + channel0OnStepLowByte, onStep1 & 0xFF)
@@ -258,10 +256,8 @@ namespace qcar {
 
         
         const pinOffset2 = PinRegDistance * 1
-        onStep2: number;
-        offStep2: number;
-        onStep2 = 0
-        offStep2 = 4095
+        const onStep2 = 0
+        const offStep2 = 4095
 
         // Low byte of onStep
         write(64, pinOffset2 + channel0OnStepLowByte, onStep2 & 0xFF)
