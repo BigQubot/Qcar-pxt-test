@@ -252,7 +252,7 @@ namespace qcar {
         write(64, 0x09, (4095 >> 8) & 0x0F)
 
     } 
-}
+
 
     /**
      * Used to set the pulse range (0-4095) of a given pin on the PCA9685
