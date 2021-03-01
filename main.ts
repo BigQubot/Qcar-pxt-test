@@ -258,16 +258,16 @@ namespace qcar {
         const offStep2 = 4095
 
         // Low byte of onStep
-        write(64, 0x10, onStep2 & 0xFF)
+        write(64, 0x0A, onStep2 & 0xFF)
 
         // High byte of onStep
-        write(64, 0x11, (onStep2 >> 8) & 0x0F)
+        write(64, 0x0B, (onStep2 >> 8) & 0x0F)
 
         // Low byte of offStep
-        write(64, 0x12, offStep2 & 0xFF)
+        write(64, 0x0C, offStep2 & 0xFF)
 
         // High byte of offStep
-        write(64, 0x13, (offStep2 >> 8) & 0x0F)
+        write(64, 0x0D, (offStep2 >> 8) & 0x0F)
 
     } 
 
