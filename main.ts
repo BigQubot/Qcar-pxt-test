@@ -238,36 +238,31 @@ namespace qcar {
    //% weight=94 blockGap=8
 
    export function Stop(): void {
-    const onStep1 = 0
-    const offStep1 = 4095
 
     // Low byte of onStep
-    write(64, 0x06, onStep1 & 0xFF)
+    write(64, 0x06, 0)
 
     // High byte of onStep
-    write(64, 0x07, (onStep1 >> 8) & 0x0F)
+    write(64, 0x07, 0)
 
     // Low byte of offStep
-    write(64, 0x08, offStep1 & 0xFF)
+    write(64, 0x08, 95)
 
     // High byte of offStep
-    write(64, 0x09, (offStep1 >> 8) & 0x0F)
+    write(64, 0x09, 0)
 
-        
-        const onStep2 = 0
-        const offStep2 = 4095
 
         // Low byte of onStep
-        write(64, 0x0A, onStep2 & 0xFF)
+        write(64, 0x0A, 0)
 
         // High byte of onStep
-        write(64, 0x0B, (onStep2 >> 8) & 0x0F)
+        write(64, 0x0B, 0)
 
         // Low byte of offStep
-        write(64, 0x0C, offStep2 & 0xFF)
+        write(64, 0x0C, 95)
 
         // High byte of offStep
-        write(64, 0x0D, (offStep2 >> 8) & 0x0F)
+        write(64, 0x0D, 0)
 
     } 
 
