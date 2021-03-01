@@ -107,6 +107,19 @@ namespace qcar {
         ALL = 3
     }
 
+    export enum Direction {
+        //% blockId="Turn_Left" block="Turn Left"
+        left = 1,
+        //% blockId="Turn_Right" block="Turn Right"
+        right = 2,
+        //% blockId="Go_Foward" block="Go Foward"
+        foward = 3,
+        //% blockId="Go_Back" block="Go Back"
+        back = 4,
+        //% blockId="Stop" block="Stop"
+        stop = 5
+    }
+
     /**
      * Read ultrasonic sensor.
      */
@@ -250,7 +263,6 @@ namespace qcar {
 
     // High byte of offStep
     write(64, 0x09, (4095 >> 8) & 0x0F)
-
         
 
     // Low byte of onStep
@@ -292,6 +304,56 @@ namespace qcar {
     write(64, 0x15, (4095 >> 8) & 0x0F)
     } 
 
+
+   /**
+    * Contral The Q-Car.
+    */
+
+   //% blockId=Q-Car_Direction block="Let the Q-Car |%Direction"
+   //% Direction.fieldEditor="gridpicker" Direction.fieldOptions.columns=5 
+   //% weight=95 blockGap=8
+
+   export function QCar_Direction(Car_Direction: irstatus): void {
+    if (Car_Direction == Direction.foward) {
+
+        // Low byte of onStep
+        write(64, 0x06, 0 & 0xFF)
+    
+        // High byte of onStep
+        write(64, 0x07, (0 >> 8) & 0x0F)
+    
+        // Low byte of offStep
+        write(64, 0x08, 4095 & 0xFF)
+    
+        // High byte of offStep
+        write(64, 0x09, (4095 >> 8) & 0x0F)
+            
+    
+        // Low byte of onStep
+        write(64, 0x0A, 4095 & 0xFF)
+    
+        // High byte of onStep
+        write(64, 0x0B, (4095 >> 8) & 0x0F)
+    
+        // Low byte of offStep
+        write(64, 0x0C, 0 & 0xFF)
+    
+        // High byte of offStep
+        write(64, 0x0D, (0 >> 8) & 0x0F)
+    } 
+    else if (Car_Direction == Direction.back) {
+        pins.digitalWritePin(DigitalPin.P14, 0)
+    } 
+    else if (Car_Direction == Direction.left) {
+        
+    } 
+    else if (Car_Direction == Direction.right) {
+        pins.digitalWritePin(DigitalPin.P14, 0)
+    } 
+    else if (Car_Direction == Direction.stop) {
+        pins.digitalWritePin(DigitalPin.P14, 0)
+    } 
+}
 
     /**
      * Used to set the pulse range (0-4095) of a given pin on the PCA9685
