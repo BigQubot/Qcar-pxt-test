@@ -230,6 +230,29 @@ namespace qcar {
        } 
    }
 
+   /**
+    * Stop the Q-Car
+    */
+
+   //% blockId=Stop_QCar block="Stop the Q-Car"
+   //% weight=94 blockGap=8
+
+   export function Stop(): void {
+
+    // Low byte of onStep
+    write(64, 0x06, 0 & 0xFF)
+
+    // High byte of onStep
+    write(64, 0x06, (0 >> 8) & 0x0F)
+
+    // Low byte of offStep
+    write(64, 0x06, 4095 & 0xFF)
+
+    // High byte of offStep
+    write(64, 0x06, (4095 >> 8) & 0x0F)
+
+    } 
+}
 
     /**
      * Used to set the pulse range (0-4095) of a given pin on the PCA9685
