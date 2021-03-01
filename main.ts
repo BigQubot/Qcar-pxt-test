@@ -251,6 +251,21 @@ namespace qcar {
         // High byte of offStep
         write(64, 0x09, (4095 >> 8) & 0x0F)
 
+        
+        const pinOffset1 = 4
+
+        // Low byte of onStep
+        write(64, pinOffset1 + channel0OnStepLowByte, 0 & 0xFF)
+
+        // High byte of onStep
+        write(64, pinOffset1 + channel0OnStepHighByte, (0 >> 8) & 0x0F)
+
+        // Low byte of offStep
+        write(64, pinOffset1 + channel0OffStepLowByte, 4095 & 0xFF)
+
+        // High byte of offStep
+        write(64, pinOffset1 + channel0OffStepHighByte, (4095 >> 8) & 0x0F)
+
     } 
 
 
