@@ -108,14 +108,14 @@ namespace qcar {
     }
 
     export enum Direction {
-        //% blockId="Turn_Left" block="Turn Left"
-        left = 1,
-        //% blockId="Turn_Right" block="Turn Right"
-        right = 2,
         //% blockId="Go_Foward" block="Go Foward"
-        foward = 3,
+        foward = 1,
         //% blockId="Go_Back" block="Go Back"
-        back = 4,
+        back = 2,
+        //% blockId="Turn_Left" block="Turn Left"
+        left = 3,
+        //% blockId="Turn_Right" block="Turn Right"
+        right = 4,
         //% blockId="Stop" block="Stop"
         stop = 5
     }
@@ -358,7 +358,7 @@ namespace qcar {
         write(64, 0x12, 4095 & 0xFF)
         write(64, 0x13, (4095 >> 8) & 0x0F)
         write(64, 0x14, 0 & 0xFF)
-        write(64, 0x15, (0 >> 8) & 0x0F)
+        write(64, 0x15, (0  >> 8) & 0x0F)
     } 
     else if (Car_Direction == Direction.left) {
         
