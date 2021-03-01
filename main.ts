@@ -240,29 +240,30 @@ namespace qcar {
    export function Stop(): void {
 
     // Low byte of onStep
-    write(64, 0x06, 0)
+    write(64, 0x06, 0 & 0xFF)
 
     // High byte of onStep
-    write(64, 0x07, 0)
+    write(64, 0x07, (0 >> 8) & 0x0F)
 
     // Low byte of offStep
-    write(64, 0x08, 95)
+    write(64, 0x08, 4059 & 0xFF)
 
     // High byte of offStep
-    write(64, 0x09, 0)
+    write(64, 0x09, (offStep1 >> 8) & 0x0F)
 
+        
 
         // Low byte of onStep
-        write(64, 0x0A, 0)
+        write(64, 0x0A, 0 & 0xFF)
 
         // High byte of onStep
-        write(64, 0x0B, 0)
+        write(64, 0x0B, (0 >> 8) & 0x0F)
 
         // Low byte of offStep
-        write(64, 0x0C, 95)
+        write(64, 0x0C, 4059 & 0xFF)
 
         // High byte of offStep
-        write(64, 0x0D, 0)
+        write(64, 0x0D, (4059 >> 8) & 0x0F)
 
     } 
 
