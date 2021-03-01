@@ -239,20 +239,20 @@ namespace qcar {
 
    export function Stop(): void {
 
-    // Low byte of onStep
-    write(64, 0x06, 0 & 0xFF)
+        // Low byte of onStep
+        write(64, 0x06, 0 & 0xFF)
 
-    // High byte of onStep
-    write(64, 0x06, (0 >> 8) & 0x0F)
+        // High byte of onStep
+        write(64, 0x07, (0 >> 8) & 0x0F)
 
-    // Low byte of offStep
-    write(64, 0x06, 4095 & 0xFF)
+        // Low byte of offStep
+        write(64, 0x08, 4095 & 0xFF)
 
-    // High byte of offStep
-    write(64, 0x06, (4095 >> 8) & 0x0F)
+        // High byte of offStep
+        write(64, 0x09, (4095 >> 8) & 0x0F)
 
     } 
-
+}
 
     /**
      * Used to set the pulse range (0-4095) of a given pin on the PCA9685
