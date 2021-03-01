@@ -296,9 +296,8 @@ namespace qcar {
         write(64, 0x0C, 0 & 0xFF)
         write(64, 0x0D, (0 >> 8) & 0x0F)
 
-
         write(64, 0x0E, 4095 & 0xFF)
-        write(64, 0x0E, (4095 >> 8) & 0x0F)
+        write(64, 0x0F, (4095 >> 8) & 0x0F)
         write(64, 0x10, 0 & 0xFF)
         write(64, 0x11, (0 >> 8) & 0x0F)
 
@@ -321,7 +320,7 @@ namespace qcar {
 
 
         write(64, 0x0E, 0 & 0xFF)
-        write(64, 0x0E, (0 >> 8) & 0x0F)
+        write(64, 0x0F, (0 >> 8) & 0x0F)
         write(64, 0x10, 4095 & 0xFF)
         write(64, 0x11, (4095 >> 8) & 0x0F)
 
@@ -344,7 +343,7 @@ namespace qcar {
 
 
         write(64, 0x0E, 0 & 0xFF)
-        write(64, 0x0E, (0 >> 8) & 0x0F)
+        write(64, 0x0F, (0 >> 8) & 0x0F)
         write(64, 0x10, 4095 & 0xFF)
         write(64, 0x11, (4095 >> 8) & 0x0F)
 
@@ -368,7 +367,7 @@ namespace qcar {
 
 
         write(64, 0x0E, 4095 & 0xFF)
-        write(64, 0x0E, (4095 >> 8) & 0x0F)
+        write(64, 0x0F, (4095 >> 8) & 0x0F)
         write(64, 0x10, 0 & 0xFF)
         write(64, 0x11, (0 >> 8) & 0x0F)
 
@@ -391,7 +390,7 @@ namespace qcar {
         write(64, 0x0D, (4095 >> 8) & 0x0F)
     
         write(64, 0x0E, 0 & 0xFF)
-        write(64, 0x0E, (0 >> 8) & 0x0F)
+        write(64, 0x0F, (0 >> 8) & 0x0F)
         write(64, 0x10, 4095 & 0xFF)
         write(64, 0x11, (4095 >> 8) & 0x0F)
     
