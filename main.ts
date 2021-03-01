@@ -246,10 +246,10 @@ namespace qcar {
     write(64, 0x07, (0 >> 8) & 0x0F)
 
     // Low byte of offStep
-    write(64, 0x08, 4059 & 0xFF)
+    write(64, 0x08, 4095 & 0xFF)
 
     // High byte of offStep
-    write(64, 0x09, (offStep1 >> 8) & 0x0F)
+    write(64, 0x09, (4095 >> 8) & 0x0F)
 
         
 
@@ -260,10 +260,10 @@ namespace qcar {
         write(64, 0x0B, (0 >> 8) & 0x0F)
 
         // Low byte of offStep
-        write(64, 0x0C, 4059 & 0xFF)
+        write(64, 0x0C, 4095 & 0xFF)
 
         // High byte of offStep
-        write(64, 0x0D, (4059 >> 8) & 0x0F)
+        write(64, 0x0D, (4095 >> 8) & 0x0F)
 
     } 
 
