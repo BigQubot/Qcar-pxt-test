@@ -22,6 +22,13 @@ namespace qcar {
     const channel0OnStepHighByte = 0x07 // LED0_ON_H
     const channel0OffStepLowByte = 0x08 // LED0_OFF_L
     const channel0OffStepHighByte = 0x09 // LED0_OFF_H
+    const allChannelsOnStepLowByte = 0xFA // ALL_LED_ON_L
+    const allChannelsOnStepHighByte = 0xFB // ALL_LED_ON_H
+    const allChannelsOffStepLowByte = 0xFC // ALL_LED_OFF_L
+    const allChannelsOffStepHighByte = 0xFD // ALL_LED_OFF_H
+    const modeRegister1 = 0x00 // MODE1
+    const sleep = modeRegister1Default | 0x10; // Set sleep bit to 1
+    const PrescaleReg = 0xFE //the prescale register address
     export enum PinNum {
         Pin0 = 0,
         Pin1 = 1,
@@ -249,6 +256,10 @@ namespace qcar {
 
         // High byte of offStep
         write(chipAddress, pinOffset + channel0OffStepHighByte, (offStep >> 8) & 0x0F)
+    }
+
+    function calcFreqPrescaler(freq: number): number {
+        return (25000000 / (freq * chipResolution)) - 1;
     }
 
 
