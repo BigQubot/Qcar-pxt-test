@@ -313,7 +313,7 @@ namespace qcar {
    //% Direction.fieldEditor="gridpicker" Direction.fieldOptions.columns=5 
    //% weight=95 blockGap=8
 
-   export function QCar_Direction(Car_Direction: irstatus): void {
+   export function QCar_Direction(Car_Direction: Direction): void {
     if (Car_Direction == Direction.foward) {
 
         // Low byte of onStep
@@ -342,16 +342,13 @@ namespace qcar {
         write(64, 0x0D, (0 >> 8) & 0x0F)
     } 
     else if (Car_Direction == Direction.back) {
-        pins.digitalWritePin(DigitalPin.P14, 0)
     } 
     else if (Car_Direction == Direction.left) {
         
     } 
     else if (Car_Direction == Direction.right) {
-        pins.digitalWritePin(DigitalPin.P14, 0)
     } 
     else if (Car_Direction == Direction.stop) {
-        pins.digitalWritePin(DigitalPin.P14, 0)
     } 
 }
 
