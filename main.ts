@@ -238,33 +238,38 @@ namespace qcar {
    //% weight=94 blockGap=8
 
    export function Stop(): void {
+    const pinOffset1 = PinRegDistance * 0
+    onStep1 = 0
+    offStep1 = 4095
 
-        // Low byte of onStep
-        write(64, 0x06, 0 & 0xFF)
+    // Low byte of onStep
+    write(64, pinOffset1 + channel0OnStepLowByte, onStep1 & 0xFF)
 
-        // High byte of onStep
-        write(64, 0x07, (0 >> 8) & 0x0F)
+    // High byte of onStep
+    write(64, pinOffset1 + channel0OnStepHighByte, (onStep1 >> 8) & 0x0F)
 
-        // Low byte of offStep
-        write(64, 0x08, 4095 & 0xFF)
+    // Low byte of offStep
+    write(64, pinOffset1 + channel0OffStepLowByte, offStep1 & 0xFF)
 
-        // High byte of offStep
-        write(64, 0x09, (4095 >> 8) & 0x0F)
+    // High byte of offStep
+    write(64, pinOffset1 + channel0OffStepHighByte, (offStep1 >> 8) & 0x0F)
 
         
-        const pinOffset1 = 4
+        const pinOffset2 = PinRegDistance * 1
+        onStep2 = 0
+        offStep2 = 4095
 
         // Low byte of onStep
-        write(64, 0x10, 0 & 0xFF)
+        write(64, pinOffset2 + channel0OnStepLowByte, onStep2 & 0xFF)
 
         // High byte of onStep
-        write(64, 0x11, (0 >> 8) & 0x0F)
+        write(64, pinOffset2 + channel0OnStepHighByte, (onStep2 >> 8) & 0x0F)
 
         // Low byte of offStep
-        write(64, 0x12, 4095 & 0xFF)
+        write(64, pinOffset2 + channel0OffStepLowByte, offStep2 & 0xFF)
 
         // High byte of offStep
-        write(64, 0x13, (4095 >> 8) & 0x0F)
+        write(64, pinOffset2 + channel0OffStepHighByte, (offStep2 >> 8) & 0x0F)
 
     } 
 
