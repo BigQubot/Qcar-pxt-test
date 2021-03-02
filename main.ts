@@ -1,6 +1,7 @@
 /** 
- * @file QCar-pxt/main.ts
- * @brief BnanaaPi's Q-Car makecode library.
+ * @file pxt-Qcar/maqueen.ts
+ * @brief DFRobot's maqueen makecode library.
+ * @n [Get the module here](https://www.dfrobot.com.cn/goods-1802.html)
  * @n This is a MakeCode graphical programming education robot.
  * 
  * @copyright    [BnanaaPi](http://wiki.banana-pi.org/Getting_Started_with_BPI-QCar), 2020
@@ -9,6 +10,9 @@
  * @author [email](1445788683@qq.com)
  * @date  2020-01-19
 */
+
+let qcarparam = 0
+let qcarparam1 = 1
 enum PingUnit {
     //% block="cm"
     Centimeters,
@@ -17,89 +21,54 @@ enum PingUnit {
 
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
+
+
+    let _DEBUG: boolean = false
+    const debug = (msg: string) => {
+        if (_DEBUG === true) {
+            serial.writeLine(msg)
+        }
+    }
+    const PinRegDistance = 4
+    const channel0OnStepLowByte = 0x06 // LED0_ON_L
+    const channel0OnStepHighByte = 0x07 // LED0_ON_H
+    const channel0OffStepLowByte = 0x08 // LED0_OFF_L
+    const channel0OffStepHighByte = 0x09 // LED0_OFF_H
+    const allChannelsOnStepLowByte = 0xFA // ALL_LED_ON_L
+    const allChannelsOnStepHighByte = 0xFB // ALL_LED_ON_H
+    const allChannelsOffStepLowByte = 0xFC // ALL_LED_OFF_L
+    const allChannelsOffStepHighByte = 0xFD // ALL_LED_OFF_H
+    const modeRegister1Default = 0x01
+    const modeRegister1 = 0x00 // MODE1
+    const sleep = modeRegister1Default | 0x10; // Set sleep bit to 1
+    const wake = modeRegister1Default & 0xEF; // Set sleep bit to 0
+    const restart = wake | 0x80; // Set restart bit to 1
+    const PrescaleReg = 0xFE //the prescale register address
+    const chipResolution = 4096;
+    export enum PinNum {
+        Pin0 = 0,
+        Pin1 = 1,
+        Pin2 = 2,
+        Pin3 = 3,
+        Pin4 = 4,
+        Pin5 = 5,
+        Pin6 = 6,
+        Pin7 = 7,
+        Pin8 = 8,
+        Pin9 = 9,
+        Pin10 = 10,
+        Pin11 = 11,
+        Pin12 = 12,
+        Pin13 = 13,
+        Pin14 = 14,
+        Pin15 = 15,
+    }
     function write(chipAddress: number, register: number, value: number): void {
         const buffer = pins.createBuffer(2)
         buffer[0] = register
         buffer[1] = value
         pins.i2cWriteBuffer(chipAddress, buffer, false)
     }
-    
-    function leftmotor(dir: number): void {
-        if (dir == 0) {
-            //left motor foward
-           write(64, 0x0E, 4095 & 0xFF)
-           write(64, 0x0F, (4095 >> 8) & 0x0F)
-           write(64, 0x10, 0 & 0xFF)
-           write(64, 0x11, (0 >> 8) & 0x0F)
-
-           write(64, 0x12, 0 & 0xFF)
-           write(64, 0x13, (0 >> 8) & 0x0F)
-           write(64, 0x14, 4095 & 0xFF)
-           write(64, 0x15, (4095 >> 8) & 0x0F)
-           led.plot(1,1)
-        } else if (dir == 1) {
-            //left motor back
-            write(64, 0x0E, 0 & 0xFF)
-            write(64, 0x0F, (0 >> 8) & 0x0F)
-            write(64, 0x10, 4095 & 0xFF)
-            write(64, 0x11, (4095 >> 8) & 0x0F)
-
-            write(64, 0x12, 4095 & 0xFF)
-            write(64, 0x13, (4095 >> 8) & 0x0F)
-            write(64, 0x14, 0 & 0xFF)
-            write(64, 0x15, (0  >> 8) & 0x0F)
-        }else {
-            write(64, 0x0E, 0 & 0xFF)
-            write(64, 0x0F, (0 >> 8) & 0x0F)
-            write(64, 0x10, 4095 & 0xFF)
-            write(64, 0x11, (4095 >> 8) & 0x0F)
-        
-            write(64, 0x12, 0 & 0xFF)
-            write(64, 0x13, (0 >> 8) & 0x0F)
-            write(64, 0x14, 4095 & 0xFF)
-            write(64, 0x15, (4095 >> 8) & 0x0F)
-        }
-    }
-
-    function rightmotor(dir: number): void {
-        if (dir == 0) {
-            //right motor foward
-           write(64, 0x06, 0 & 0xFF)
-           write(64, 0x07, (0 >> 8) & 0x0F)
-           write(64, 0x08, 4095 & 0xFF)
-           write(64, 0x09, (4095 >> 8) & 0x0F)
-            
-           write(64, 0x0A, 4095 & 0xFF)
-           write(64, 0x0B, (4095 >> 8) & 0x0F)
-           write(64, 0x0C, 0 & 0xFF)
-           write(64, 0x0D, (0 >> 8) & 0x0F)
-        } else if (dir == 1) {
-            //right motor back
-            write(64, 0x06, 4095 & 0xFF)
-            write(64, 0x07, (4095 >> 8) & 0x0F)
-            write(64, 0x08, 0 & 0xFF)
-            write(64, 0x09, (0 >> 8) & 0x0F)
-            
-            write(64, 0x0A, 0 & 0xFF)
-            write(64, 0x0B, (0 >> 8) & 0x0F)
-            write(64, 0x0C, 4095 & 0xFF)
-            write(64, 0x0D, (4095 >> 8) & 0x0F)
-        }else {
-            write(64, 0x06, 0 & 0xFF)
-            write(64, 0x07, (0 >> 8) & 0x0F)
-            write(64, 0x08, 4095 & 0xFF)
-            write(64, 0x09, (4095 >> 8) & 0x0F)
-                
-            write(64, 0x0A, 0 & 0xFF)
-            write(64, 0x0B, (0 >> 8) & 0x0F)
-            write(64, 0x0C, 4095 & 0xFF)
-            write(64, 0x0D, (4095 >> 8) & 0x0F)
-        }
-        
-    }
-
-
-
 
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
@@ -289,8 +258,27 @@ namespace qcar {
    //% weight=94 blockGap=8
 
    export function Stop(): void {
-    leftmotor(2);
-    rightmotor(2)
+
+    // Low byte of onStep
+    write(64, 0x06, 0 & 0xFF)
+    write(64, 0x07, (0 >> 8) & 0x0F)
+    write(64, 0x08, 4095 & 0xFF)
+    write(64, 0x09, (4095 >> 8) & 0x0F)
+        
+    write(64, 0x0A, 0 & 0xFF)
+    write(64, 0x0B, (0 >> 8) & 0x0F)
+    write(64, 0x0C, 4095 & 0xFF)
+    write(64, 0x0D, (4095 >> 8) & 0x0F)
+
+    write(64, 0x0E, 0 & 0xFF)
+    write(64, 0x0E, (0 >> 8) & 0x0F)
+    write(64, 0x10, 4095 & 0xFF)
+    write(64, 0x11, (4095 >> 8) & 0x0F)
+
+    write(64, 0x12, 0 & 0xFF)
+    write(64, 0x13, (0 >> 8) & 0x0F)
+    write(64, 0x14, 4095 & 0xFF)
+    write(64, 0x15, (4095 >> 8) & 0x0F)
     } 
 
 
@@ -303,30 +291,206 @@ namespace qcar {
    //% weight=95 blockGap=8
 
    export function QCar_Direction(Car_Direction: Direction): void {
-       if (Car_Direction == Direction.foward) {
-           
-           leftmotor(0);
-           rightmotor(0)
-        } 
-        else if (Car_Direction == Direction.back) {
-            leftmotor(1);
-            rightmotor(1)
-        } 
-        else if (Car_Direction == Direction.left) {
-            leftmotor(1);
-            rightmotor(0)
+    if (Car_Direction == Direction.foward) {
+
+        write(64, 0x06, 0 & 0xFF)
+        write(64, 0x07, (0 >> 8) & 0x0F)
+        write(64, 0x08, 4095 & 0xFF)
+        write(64, 0x09, (4095 >> 8) & 0x0F)
+            
+        write(64, 0x0A, 4095 & 0xFF)
+        write(64, 0x0B, (4095 >> 8) & 0x0F)
+        write(64, 0x0C, 0 & 0xFF)
+        write(64, 0x0D, (0 >> 8) & 0x0F)
+
+        write(64, 0x0E, 4095 & 0xFF)
+        write(64, 0x0F, (4095 >> 8) & 0x0F)
+        write(64, 0x10, 0 & 0xFF)
+        write(64, 0x11, (0 >> 8) & 0x0F)
+
+        write(64, 0x12, 0 & 0xFF)
+        write(64, 0x13, (0 >> 8) & 0x0F)
+        write(64, 0x14, 4095 & 0xFF)
+        write(64, 0x15, (4095 >> 8) & 0x0F)
+    } 
+    else if (Car_Direction == Direction.back) {
+
+        write(64, 0x06, 4095 & 0xFF)
+        write(64, 0x07, (4095 >> 8) & 0x0F)
+        write(64, 0x08, 0 & 0xFF)
+        write(64, 0x09, (0 >> 8) & 0x0F)
+            
+        write(64, 0x0A, 0 & 0xFF)
+        write(64, 0x0B, (0 >> 8) & 0x0F)
+        write(64, 0x0C, 4095 & 0xFF)
+        write(64, 0x0D, (4095 >> 8) & 0x0F)
+
+
+        write(64, 0x0E, 0 & 0xFF)
+        write(64, 0x0F, (0 >> 8) & 0x0F)
+        write(64, 0x10, 4095 & 0xFF)
+        write(64, 0x11, (4095 >> 8) & 0x0F)
+
+        write(64, 0x12, 4095 & 0xFF)
+        write(64, 0x13, (4095 >> 8) & 0x0F)
+        write(64, 0x14, 0 & 0xFF)
+        write(64, 0x15, (0  >> 8) & 0x0F)
+    } 
+    else if (Car_Direction == Direction.left) {
+
+        write(64, 0x06, 0 & 0xFF)
+        write(64, 0x07, (0 >> 8) & 0x0F)
+        write(64, 0x08, 4095 & 0xFF)
+        write(64, 0x09, (4095 >> 8) & 0x0F)
+            
+        write(64, 0x0A, 4095 & 0xFF)
+        write(64, 0x0B, (4095 >> 8) & 0x0F)
+        write(64, 0x0C, 0 & 0xFF)
+        write(64, 0x0D, (0 >> 8) & 0x0F)
+
+
+        write(64, 0x0E, 0 & 0xFF)
+        write(64, 0x0F, (0 >> 8) & 0x0F)
+        write(64, 0x10, 4095 & 0xFF)
+        write(64, 0x11, (4095 >> 8) & 0x0F)
+
+        write(64, 0x12, 4095 & 0xFF)
+        write(64, 0x13, (4095 >> 8) & 0x0F)
+        write(64, 0x14, 0 & 0xFF)
+        write(64, 0x15, (0  >> 8) & 0x0F)
         
-        } 
-        else if (Car_Direction == Direction.right) {
+    } 
+    else if (Car_Direction == Direction.right) {
 
-            leftmotor(0);
-            rightmotor(1)
-        } 
-        else if (Car_Direction == Direction.stop) {
+        write(64, 0x06, 4095 & 0xFF)
+        write(64, 0x07, (4095 >> 8) & 0x0F)
+        write(64, 0x08, 0 & 0xFF)
+        write(64, 0x09, (0 >> 8) & 0x0F)
+            
+        write(64, 0x0A, 0 & 0xFF)
+        write(64, 0x0B, (0 >> 8) & 0x0F)
+        write(64, 0x0C, 4095 & 0xFF)
+        write(64, 0x0D, (4095 >> 8) & 0x0F)
 
-            leftmotor(2);
-            rightmotor(2)
-        } 
+
+        write(64, 0x0E, 4095 & 0xFF)
+        write(64, 0x0F, (4095 >> 8) & 0x0F)
+        write(64, 0x10, 0 & 0xFF)
+        write(64, 0x11, (0 >> 8) & 0x0F)
+
+        write(64, 0x12, 0 & 0xFF)
+        write(64, 0x13, (0 >> 8) & 0x0F)
+        write(64, 0x14, 4095 & 0xFF)
+        write(64, 0x15, (4095 >> 8) & 0x0F)
+    } 
+    else if (Car_Direction == Direction.stop) {
+
+        // Low byte of onStep
+        write(64, 0x06, 0 & 0xFF)
+        write(64, 0x07, (0 >> 8) & 0x0F)
+        write(64, 0x08, 4095 & 0xFF)
+        write(64, 0x09, (4095 >> 8) & 0x0F)
+            
+        write(64, 0x0A, 0 & 0xFF)
+        write(64, 0x0B, (0 >> 8) & 0x0F)
+        write(64, 0x0C, 4095 & 0xFF)
+        write(64, 0x0D, (4095 >> 8) & 0x0F)
+    
+        write(64, 0x0E, 0 & 0xFF)
+        write(64, 0x0F, (0 >> 8) & 0x0F)
+        write(64, 0x10, 4095 & 0xFF)
+        write(64, 0x11, (4095 >> 8) & 0x0F)
+    
+        write(64, 0x12, 0 & 0xFF)
+        write(64, 0x13, (0 >> 8) & 0x0F)
+        write(64, 0x14, 4095 & 0xFF)
+        write(64, 0x15, (4095 >> 8) & 0x0F)
+    } 
+}
+
+    /**
+     * Used to set the pulse range (0-4095) of a given pin on the PCA9685
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
+     * @param pinNumber The pin number (0-15) to set the pulse range on
+     * @param onStep The range offset (0-4095) to turn the signal on
+     * @param offStep The range offset (0-4095) to turn the signal off
+     */
+    //% block advanced=true
+    export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = 0x40): void {
+        pinNumber = Math.max(0, Math.min(15, pinNumber))
+        const buffer = pins.createBuffer(2)
+        const pinOffset = PinRegDistance * pinNumber
+        onStep = Math.max(0, Math.min(4095, onStep))
+        offStep = Math.max(0, Math.min(4095, offStep))
+
+        debug(`setPinPulseRange(${pinNumber}, ${onStep}, ${offStep}, ${chipAddress})`)
+        debug(`  pinOffset ${pinOffset}`)
+
+        // Low byte of onStep
+        write(chipAddress, pinOffset + channel0OnStepLowByte, onStep & 0xFF)
+
+        // High byte of onStep
+        write(chipAddress, pinOffset + channel0OnStepHighByte, (onStep >> 8) & 0x0F)
+
+        // Low byte of offStep
+        write(chipAddress, pinOffset + channel0OffStepLowByte, offStep & 0xFF)
+
+        // High byte of offStep
+        write(chipAddress, pinOffset + channel0OffStepHighByte, (offStep >> 8) & 0x0F)
     }
 
+    function calcFreqPrescaler(freq: number): number {
+        return (25000000 / (freq * chipResolution)) - 1;
+    }
+
+
+        /**
+     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
+     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
+     */
+    //% block advanced=true
+    export function init(chipAddress: number = 0x40, newFreq: number = 50) {
+        debug(`Init chip at address ${chipAddress} to ${newFreq}Hz`)
+        const buf = pins.createBuffer(2)
+        const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
+        const prescaler = calcFreqPrescaler(freq)
+
+        write(chipAddress, modeRegister1, sleep)
+
+        write(chipAddress, PrescaleReg, prescaler)
+
+        write(chipAddress, allChannelsOnStepLowByte, 0x00)
+        write(chipAddress, allChannelsOnStepHighByte, 0x00)
+        write(chipAddress, allChannelsOffStepLowByte, 0x00)
+        write(chipAddress, allChannelsOffStepHighByte, 0x00)
+
+        write(chipAddress, modeRegister1, wake)
+
+        control.waitMicros(1000)
+        write(chipAddress, modeRegister1, restart)
+    }
+
+        /**
+     * Used to move the given servo to the specified degrees (0-180) connected to the PCA9685
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
+     * @param servoNum The number (1-16) of the servo to move
+     * @param degrees The degrees (0-180) to move the servo to
+     */
+    //% block
+    export function setServoPosition(servoNum: ServoNum = 1, degrees: number, chipAddress: number = 0x40): void {
+        const chip = getChipConfig(chipAddress)
+        servoNum = Math.max(1, Math.min(16, servoNum))
+        degrees = Math.max(0, Math.min(180, degrees))
+        const servo: ServoConfig = chip.servos[servoNum - 1]
+        const pwm = degrees180ToPWM(chip.freq, degrees, servo.minOffset, servo.maxOffset)
+        servo.position = degrees
+        debug(`setServoPosition(${servoNum}, ${degrees}, ${chipAddress})`)
+        debug(`  servo.pinNumber ${servo.pinNumber}`)
+        debug(`  servo.minOffset ${servo.minOffset}`)
+        debug(`  servo.maxOffset ${servo.maxOffset}`)
+        debug(`  pwm ${pwm}`)
+        servo.debug()
+        return setPinPulseRange(servo.pinNumber, 0, pwm, chipAddress)
+    }
 }
