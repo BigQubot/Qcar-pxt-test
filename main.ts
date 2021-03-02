@@ -50,7 +50,7 @@ namespace qcar {
             write(64, 0x15, (0  >> 8) & 0x0F)
         }else {
             write(64, 0x0E, 0 & 0xFF)
-            write(64, 0x0E, (0 >> 8) & 0x0F)
+            write(64, 0x0F, (0 >> 8) & 0x0F)
             write(64, 0x10, 4095 & 0xFF)
             write(64, 0x11, (4095 >> 8) & 0x0F)
         
@@ -305,7 +305,6 @@ namespace qcar {
    export function QCar_Direction(Car_Direction: Direction): void {
        if (Car_Direction == Direction.foward) {
            
-        led.plot(1,2)
            leftmotor(0);
            rightmotor(0)
         } 
