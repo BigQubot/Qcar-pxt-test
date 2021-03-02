@@ -360,7 +360,7 @@ namespace qcar {
             rightmotor(2)
         } 
     }
-}
+
 
     /**
      * Used to set the pulse range (0-4095) of a given pin on the PCA9685
