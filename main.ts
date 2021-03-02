@@ -108,6 +108,50 @@ namespace qcar {
             this.init(config)
         }
 
+        init(config: ServoConfigObject) {
+            this.pinNumber = config.pinNumber > -1 ? config.pinNumber : this.id - 1
+            this.setOffsetsFromFreq(config.minOffset, config.maxOffset, config.midOffset)
+            this.position = -1
+        }
+
+        debug() {
+            const params = this.config()
+
+            for (let j = 0; j < params.length; j = j + 2) {
+                debug(`Servo[${this.id}].${params[j]}: ${params[j + 1]}`)
+            }
+        }
+
+        setOffsetsFromFreq(startFreq: number, stopFreq: number, midFreq: number = -1): void {
+            this.minOffset = startFreq // calcFreqOffset(startFreq)
+            this.maxOffset = stopFreq // calcFreqOffset(stopFreq)
+            this.midOffset = midFreq > -1 ? midFreq : ((stopFreq - startFreq) / 2) + startFreq
+        }
+
+        config(): string[] {
+            return [
+                'id', this.id.toString(),
+                'pinNumber', this.pinNumber.toString(),
+                'minOffset', this.minOffset.toString(),
+                'maxOffset', this.maxOffset.toString(),
+                'position', this.position.toString(),
+            ]
+        }
+    }
+
+    export function degrees180ToPWM(freq: number, degrees: number, offsetStart: number, offsetEnd: number): number {
+        // Calculate the offset of the off point in the freq
+        offsetEnd = calcFreqOffset(freq, offsetEnd)
+        offsetStart = calcFreqOffset(freq, offsetStart)
+        const spread: number = offsetEnd - offsetStart
+        const calcOffset: number = ((degrees * spread) / 180) + offsetStart
+        // Clamp it to the bounds
+        return Math.max(offsetStart, Math.min(offsetEnd, calcOffset))
+    }
+
+
+
+
 
     function write(chipAddress: number, register: number, value: number): void {
         const buffer = pins.createBuffer(2)
