@@ -304,6 +304,8 @@ namespace qcar {
 
    export function QCar_Direction(Car_Direction: Direction): void {
        if (Car_Direction == Direction.foward) {
+           
+        led.plot(1,2)
            leftmotor(0);
            rightmotor(0)
         } 
