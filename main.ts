@@ -58,7 +58,78 @@ namespace qcar {
         pins.i2cWriteBuffer(chipAddress, buffer, false)
     }
     
-    
+    function leftmotor(dir: number): void {
+        if (dir == 0) {
+            //left motor foward
+           write(64, 0x0E, 4095 & 0xFF)
+           write(64, 0x0F, (4095 >> 8) & 0x0F)
+           write(64, 0x10, 0 & 0xFF)
+           write(64, 0x11, (0 >> 8) & 0x0F)
+
+           write(64, 0x12, 0 & 0xFF)
+           write(64, 0x13, (0 >> 8) & 0x0F)
+           write(64, 0x14, 4095 & 0xFF)
+           write(64, 0x15, (4095 >> 8) & 0x0F)
+        } else if (dir == 1) {
+            //left motor back
+            write(64, 0x0E, 0 & 0xFF)
+            write(64, 0x0F, (0 >> 8) & 0x0F)
+            write(64, 0x10, 4095 & 0xFF)
+            write(64, 0x11, (4095 >> 8) & 0x0F)
+
+            write(64, 0x12, 4095 & 0xFF)
+            write(64, 0x13, (4095 >> 8) & 0x0F)
+            write(64, 0x14, 0 & 0xFF)
+            write(64, 0x15, (0  >> 8) & 0x0F)
+        }else {
+            write(64, 0x0E, 0 & 0xFF)
+            write(64, 0x0E, (0 >> 8) & 0x0F)
+            write(64, 0x10, 4095 & 0xFF)
+            write(64, 0x11, (4095 >> 8) & 0x0F)
+        
+            write(64, 0x12, 0 & 0xFF)
+            write(64, 0x13, (0 >> 8) & 0x0F)
+            write(64, 0x14, 4095 & 0xFF)
+            write(64, 0x15, (4095 >> 8) & 0x0F)
+        }
+    }
+
+    function rightmotor(dir: number): void {
+        if (dir == 0) {
+            //right motor foward
+           write(64, 0x06, 0 & 0xFF)
+           write(64, 0x07, (0 >> 8) & 0x0F)
+           write(64, 0x08, 4095 & 0xFF)
+           write(64, 0x09, (4095 >> 8) & 0x0F)
+            
+           write(64, 0x0A, 4095 & 0xFF)
+           write(64, 0x0B, (4095 >> 8) & 0x0F)
+           write(64, 0x0C, 0 & 0xFF)
+           write(64, 0x0D, (0 >> 8) & 0x0F)
+        } else if (dir == 1) {
+            //right motor back
+            write(64, 0x06, 4095 & 0xFF)
+            write(64, 0x07, (4095 >> 8) & 0x0F)
+            write(64, 0x08, 0 & 0xFF)
+            write(64, 0x09, (0 >> 8) & 0x0F)
+            
+            write(64, 0x0A, 0 & 0xFF)
+            write(64, 0x0B, (0 >> 8) & 0x0F)
+            write(64, 0x0C, 4095 & 0xFF)
+            write(64, 0x0D, (4095 >> 8) & 0x0F)
+        }else {
+            write(64, 0x06, 0 & 0xFF)
+            write(64, 0x07, (0 >> 8) & 0x0F)
+            write(64, 0x08, 4095 & 0xFF)
+            write(64, 0x09, (4095 >> 8) & 0x0F)
+                
+            write(64, 0x0A, 0 & 0xFF)
+            write(64, 0x0B, (0 >> 8) & 0x0F)
+            write(64, 0x0C, 4095 & 0xFF)
+            write(64, 0x0D, (4095 >> 8) & 0x0F)
+        }
+        
+    }
 
 
 
@@ -251,27 +322,8 @@ namespace qcar {
    //% weight=94 blockGap=8
 
    export function Stop(): void {
-
-    // Low byte of onStep
-    write(64, 0x06, 0 & 0xFF)
-    write(64, 0x07, (0 >> 8) & 0x0F)
-    write(64, 0x08, 4095 & 0xFF)
-    write(64, 0x09, (4095 >> 8) & 0x0F)
-        
-    write(64, 0x0A, 0 & 0xFF)
-    write(64, 0x0B, (0 >> 8) & 0x0F)
-    write(64, 0x0C, 4095 & 0xFF)
-    write(64, 0x0D, (4095 >> 8) & 0x0F)
-
-    write(64, 0x0E, 0 & 0xFF)
-    write(64, 0x0E, (0 >> 8) & 0x0F)
-    write(64, 0x10, 4095 & 0xFF)
-    write(64, 0x11, (4095 >> 8) & 0x0F)
-
-    write(64, 0x12, 0 & 0xFF)
-    write(64, 0x13, (0 >> 8) & 0x0F)
-    write(64, 0x14, 4095 & 0xFF)
-    write(64, 0x15, (4095 >> 8) & 0x0F)
+    leftmotor(2);
+    rightmotor(2)
     } 
 
 
@@ -284,121 +336,30 @@ namespace qcar {
    //% weight=95 blockGap=8
 
    export function QCar_Direction(Car_Direction: Direction): void {
-    if (Car_Direction == Direction.foward) {
-
-        write(64, 0x06, 0 & 0xFF)
-        write(64, 0x07, (0 >> 8) & 0x0F)
-        write(64, 0x08, 4095 & 0xFF)
-        write(64, 0x09, (4095 >> 8) & 0x0F)
-            
-        write(64, 0x0A, 4095 & 0xFF)
-        write(64, 0x0B, (4095 >> 8) & 0x0F)
-        write(64, 0x0C, 0 & 0xFF)
-        write(64, 0x0D, (0 >> 8) & 0x0F)
-
-        write(64, 0x0E, 4095 & 0xFF)
-        write(64, 0x0F, (4095 >> 8) & 0x0F)
-        write(64, 0x10, 0 & 0xFF)
-        write(64, 0x11, (0 >> 8) & 0x0F)
-
-        write(64, 0x12, 0 & 0xFF)
-        write(64, 0x13, (0 >> 8) & 0x0F)
-        write(64, 0x14, 4095 & 0xFF)
-        write(64, 0x15, (4095 >> 8) & 0x0F)
-    } 
-    else if (Car_Direction == Direction.back) {
-
-        write(64, 0x06, 4095 & 0xFF)
-        write(64, 0x07, (4095 >> 8) & 0x0F)
-        write(64, 0x08, 0 & 0xFF)
-        write(64, 0x09, (0 >> 8) & 0x0F)
-            
-        write(64, 0x0A, 0 & 0xFF)
-        write(64, 0x0B, (0 >> 8) & 0x0F)
-        write(64, 0x0C, 4095 & 0xFF)
-        write(64, 0x0D, (4095 >> 8) & 0x0F)
-
-
-        write(64, 0x0E, 0 & 0xFF)
-        write(64, 0x0F, (0 >> 8) & 0x0F)
-        write(64, 0x10, 4095 & 0xFF)
-        write(64, 0x11, (4095 >> 8) & 0x0F)
-
-        write(64, 0x12, 4095 & 0xFF)
-        write(64, 0x13, (4095 >> 8) & 0x0F)
-        write(64, 0x14, 0 & 0xFF)
-        write(64, 0x15, (0  >> 8) & 0x0F)
-    } 
-    else if (Car_Direction == Direction.left) {
-
-        write(64, 0x06, 0 & 0xFF)
-        write(64, 0x07, (0 >> 8) & 0x0F)
-        write(64, 0x08, 4095 & 0xFF)
-        write(64, 0x09, (4095 >> 8) & 0x0F)
-            
-        write(64, 0x0A, 4095 & 0xFF)
-        write(64, 0x0B, (4095 >> 8) & 0x0F)
-        write(64, 0x0C, 0 & 0xFF)
-        write(64, 0x0D, (0 >> 8) & 0x0F)
-
-
-        write(64, 0x0E, 0 & 0xFF)
-        write(64, 0x0F, (0 >> 8) & 0x0F)
-        write(64, 0x10, 4095 & 0xFF)
-        write(64, 0x11, (4095 >> 8) & 0x0F)
-
-        write(64, 0x12, 4095 & 0xFF)
-        write(64, 0x13, (4095 >> 8) & 0x0F)
-        write(64, 0x14, 0 & 0xFF)
-        write(64, 0x15, (0  >> 8) & 0x0F)
+       if (Car_Direction == Direction.foward) {
+           leftmotor(0);
+           rightmotor(0)
+        } 
+        else if (Car_Direction == Direction.back) {
+            leftmotor(1);
+            rightmotor(1)
+        } 
+        else if (Car_Direction == Direction.left) {
+            leftmotor(1);
+            rightmotor(0)
         
-    } 
-    else if (Car_Direction == Direction.right) {
+        } 
+        else if (Car_Direction == Direction.right) {
 
-        write(64, 0x06, 4095 & 0xFF)
-        write(64, 0x07, (4095 >> 8) & 0x0F)
-        write(64, 0x08, 0 & 0xFF)
-        write(64, 0x09, (0 >> 8) & 0x0F)
-            
-        write(64, 0x0A, 0 & 0xFF)
-        write(64, 0x0B, (0 >> 8) & 0x0F)
-        write(64, 0x0C, 4095 & 0xFF)
-        write(64, 0x0D, (4095 >> 8) & 0x0F)
+            leftmotor(0);
+            rightmotor(1)
+        } 
+        else if (Car_Direction == Direction.stop) {
 
-
-        write(64, 0x0E, 4095 & 0xFF)
-        write(64, 0x0F, (4095 >> 8) & 0x0F)
-        write(64, 0x10, 0 & 0xFF)
-        write(64, 0x11, (0 >> 8) & 0x0F)
-
-        write(64, 0x12, 0 & 0xFF)
-        write(64, 0x13, (0 >> 8) & 0x0F)
-        write(64, 0x14, 4095 & 0xFF)
-        write(64, 0x15, (4095 >> 8) & 0x0F)
-    } 
-    else if (Car_Direction == Direction.stop) {
-
-        // Low byte of onStep
-        write(64, 0x06, 0 & 0xFF)
-        write(64, 0x07, (0 >> 8) & 0x0F)
-        write(64, 0x08, 4095 & 0xFF)
-        write(64, 0x09, (4095 >> 8) & 0x0F)
-            
-        write(64, 0x0A, 0 & 0xFF)
-        write(64, 0x0B, (0 >> 8) & 0x0F)
-        write(64, 0x0C, 4095 & 0xFF)
-        write(64, 0x0D, (4095 >> 8) & 0x0F)
-    
-        write(64, 0x0E, 0 & 0xFF)
-        write(64, 0x0F, (0 >> 8) & 0x0F)
-        write(64, 0x10, 4095 & 0xFF)
-        write(64, 0x11, (4095 >> 8) & 0x0F)
-    
-        write(64, 0x12, 0 & 0xFF)
-        write(64, 0x13, (0 >> 8) & 0x0F)
-        write(64, 0x14, 4095 & 0xFF)
-        write(64, 0x15, (4095 >> 8) & 0x0F)
-    } 
+            leftmotor(2);
+            rightmotor(2)
+        } 
+    }
 }
 
     /**
