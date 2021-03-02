@@ -91,6 +91,17 @@ namespace qcar {
         position: number;
     }
 
+    export const DefaultServoConfig = new ServoConfigObject();
+    DefaultServoConfig.pinNumber = -1
+    DefaultServoConfig.minOffset = 5
+    DefaultServoConfig.midOffset = 15
+    DefaultServoConfig.maxOffset = 25
+    DefaultServoConfig.position = 90
+
+    function calcFreqOffset(freq: number, offset: number) {
+        return ((offset * 1000) / (1000 / freq) * chipResolution) / 10000
+    }
+
     export function getChipConfig(address: number): ChipConfig {
         for (let i = 0; i < chips.length; i++) {
             if (chips[i].address === address) {
