@@ -46,22 +46,10 @@ namespace qcar {
     const PrescaleReg = 0xFE //the prescale register address
     const chipResolution = 4096;
     export enum ServoNum {
-        Servo1 = 1,
-        Servo2 = 2,
-        Servo3 = 3,
-        Servo4 = 4,
-        Servo5 = 5,
-        Servo6 = 6,
-        Servo7 = 7,
-        Servo8 = 8,
-        Servo9 = 9,
-        Servo10 = 10,
-        Servo11 = 11,
-        Servo12 = 12,
-        Servo13 = 13,
-        Servo14 = 14,
-        Servo15 = 15,
-        Servo16 = 16,
+        Servo5 = 1,
+        Servo6 = 2,
+        Servo7 = 3,
+        Servo8 = 4
     }
     export enum PinNum {
         Pin0 = 0,
@@ -203,9 +191,6 @@ namespace qcar {
     }
 
 
-
-
-
     function write(chipAddress: number, register: number, value: number): void {
         const buffer = pins.createBuffer(2)
         buffer[0] = register
@@ -246,15 +231,6 @@ namespace qcar {
         iron = 1,
         //% blockId="iroff" block="off"
         iroff = 2
-    }
-
-    export enum RGBLights {
-        //% blockId="Right_RGB" block="Right_RGB"
-        RGB_L = 1,
-        //% blockId="Left_RGB" block="Left_RGB"
-        RGB_R = 0,
-        //% blockId="ALL" block="ALL"
-        ALL = 3
     }
 
     export enum Direction {
@@ -551,68 +527,6 @@ namespace qcar {
     } 
 }
 
-    /**
-     * Used to set the pulse range (0-4095) of a given pin on the PCA9685
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
-     * @param pinNumber The pin number (0-15) to set the pulse range on
-     * @param onStep The range offset (0-4095) to turn the signal on
-     * @param offStep The range offset (0-4095) to turn the signal off
-     */
-    //% block advanced=true
-    export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = 0x40): void {
-        pinNumber = Math.max(0, Math.min(15, pinNumber))
-        const buffer = pins.createBuffer(2)
-        const pinOffset = PinRegDistance * pinNumber
-        onStep = Math.max(0, Math.min(4095, onStep))
-        offStep = Math.max(0, Math.min(4095, offStep))
-
-        debug(`setPinPulseRange(${pinNumber}, ${onStep}, ${offStep}, ${chipAddress})`)
-        debug(`  pinOffset ${pinOffset}`)
-
-        // Low byte of onStep
-        write(chipAddress, pinOffset + channel0OnStepLowByte, onStep & 0xFF)
-
-        // High byte of onStep
-        write(chipAddress, pinOffset + channel0OnStepHighByte, (onStep >> 8) & 0x0F)
-
-        // Low byte of offStep
-        write(chipAddress, pinOffset + channel0OffStepLowByte, offStep & 0xFF)
-
-        // High byte of offStep
-        write(chipAddress, pinOffset + channel0OffStepHighByte, (offStep >> 8) & 0x0F)
-    }
-
-    function calcFreqPrescaler(freq: number): number {
-        return (25000000 / (freq * chipResolution)) - 1;
-    }
-
-
-        /**
-     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
-     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
-     */
-    //% block advanced=true
-    export function init(chipAddress: number = 0x40, newFreq: number = 50) {
-        debug(`Init chip at address ${chipAddress} to ${newFreq}Hz`)
-        const buf = pins.createBuffer(2)
-        const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
-        const prescaler = calcFreqPrescaler(freq)
-
-        write(chipAddress, modeRegister1, sleep)
-
-        write(chipAddress, PrescaleReg, prescaler)
-
-        write(chipAddress, allChannelsOnStepLowByte, 0x00)
-        write(chipAddress, allChannelsOnStepHighByte, 0x00)
-        write(chipAddress, allChannelsOffStepLowByte, 0x00)
-        write(chipAddress, allChannelsOffStepHighByte, 0x00)
-
-        write(chipAddress, modeRegister1, wake)
-
-        control.waitMicros(1000)
-        write(chipAddress, modeRegister1, restart)
-    }
 
         /**
      * Used to move the given servo to the specified degrees (0-180) connected to the PCA9685
@@ -620,7 +534,7 @@ namespace qcar {
      * @param servoNum The number (1-16) of the servo to move
      * @param degrees The degrees (0-180) to move the servo to
      */
-    //% block
+    //% block advanced=true
     export function setServoPosition(servoNum: ServoNum = 1, degrees: number, chipAddress: number = 0x40): void {
         const chip = getChipConfig(chipAddress)
         servoNum = Math.max(1, Math.min(16, servoNum))
@@ -628,11 +542,6 @@ namespace qcar {
         const servo: ServoConfig = chip.servos[servoNum - 1]
         const pwm = degrees180ToPWM(chip.freq, degrees, servo.minOffset, servo.maxOffset)
         servo.position = degrees
-        debug(`setServoPosition(${servoNum}, ${degrees}, ${chipAddress})`)
-        debug(`  servo.pinNumber ${servo.pinNumber}`)
-        debug(`  servo.minOffset ${servo.minOffset}`)
-        debug(`  servo.maxOffset ${servo.maxOffset}`)
-        debug(`  pwm ${pwm}`)
         servo.debug()
         return setPinPulseRange(servo.pinNumber, 0, pwm, chipAddress)
     }
