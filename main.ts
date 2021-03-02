@@ -45,6 +45,24 @@ namespace qcar {
     const restart = wake | 0x80; // Set restart bit to 1
     const PrescaleReg = 0xFE //the prescale register address
     const chipResolution = 4096;
+    export enum ServoNum {
+        Servo1 = 1,
+        Servo2 = 2,
+        Servo3 = 3,
+        Servo4 = 4,
+        Servo5 = 5,
+        Servo6 = 6,
+        Servo7 = 7,
+        Servo8 = 8,
+        Servo9 = 9,
+        Servo10 = 10,
+        Servo11 = 11,
+        Servo12 = 12,
+        Servo13 = 13,
+        Servo14 = 14,
+        Servo15 = 15,
+        Servo16 = 16,
+    }
     export enum PinNum {
         Pin0 = 0,
         Pin1 = 1,
@@ -63,6 +81,47 @@ namespace qcar {
         Pin14 = 14,
         Pin15 = 15,
     }
+
+    export function getChipConfig(address: number): ChipConfig {
+        for (let i = 0; i < chips.length; i++) {
+            if (chips[i].address === address) {
+                debug(`Returning chip ${i}`)
+                return chips[i]
+            }
+        }
+        debug(`Creating new chip for address ${address}`)
+        const chip = new ChipConfig(address)
+        const index = chips.length
+        chips.push(chip)
+        return chips[index]
+    }
+
+    export class ServoConfig {
+        id: number;
+        pinNumber: number;
+        minOffset: number;
+        midOffset: number;
+        maxOffset: number;
+        position: number;
+        constructor(id: number, config: ServoConfigObject) {
+            this.id = id
+            this.init(config)
+        }
+
+     function degrees180ToPWM(freq: number, degrees: number, offsetStart: number, offsetEnd: number): number {
+        // Calculate the offset of the off point in the freq
+        offsetEnd = calcFreqOffset(freq, offsetEnd)
+        offsetStart = calcFreqOffset(freq, offsetStart)
+        const spread: number = offsetEnd - offsetStart
+        const calcOffset: number = ((degrees * spread) / 180) + offsetStart
+        // Clamp it to the bounds
+        return Math.max(offsetStart, Math.min(offsetEnd, calcOffset))
+    }
+
+
+
+
+
     function write(chipAddress: number, register: number, value: number): void {
         const buffer = pins.createBuffer(2)
         buffer[0] = register
