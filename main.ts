@@ -1,6 +1,14 @@
-
-let qcarparam = 0
-let qcarparam1 = 1
+/** 
+ * @file QCar-pxt/main.ts
+ * @brief BnanaaPi's Q-Car makecode library.
+ * @n This is a MakeCode graphical programming education robot.
+ * 
+ * @copyright    [BnanaaPi](http://wiki.banana-pi.org/Getting_Started_with_BPI-QCar), 2020
+ * @copyright    MIT Lesser General Public License
+ * 
+ * @author [email](1445788683@qq.com)
+ * @date  2020-01-19
+*/
 enum PingUnit {
     //% block="cm"
     Centimeters,
@@ -9,48 +17,6 @@ enum PingUnit {
 
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
-
-
-    let _DEBUG: boolean = false
-    const debug = (msg: string) => {
-        if (_DEBUG === true) {
-            serial.writeLine(msg)
-        }
-    }
-    const PinRegDistance = 4
-    const channel0OnStepLowByte = 0x06 // LED0_ON_L
-    const channel0OnStepHighByte = 0x07 // LED0_ON_H
-    const channel0OffStepLowByte = 0x08 // LED0_OFF_L
-    const channel0OffStepHighByte = 0x09 // LED0_OFF_H
-    const allChannelsOnStepLowByte = 0xFA // ALL_LED_ON_L
-    const allChannelsOnStepHighByte = 0xFB // ALL_LED_ON_H
-    const allChannelsOffStepLowByte = 0xFC // ALL_LED_OFF_L
-    const allChannelsOffStepHighByte = 0xFD // ALL_LED_OFF_H
-    const modeRegister1Default = 0x01
-    const modeRegister1 = 0x00 // MODE1
-    const sleep = modeRegister1Default | 0x10; // Set sleep bit to 1
-    const wake = modeRegister1Default & 0xEF; // Set sleep bit to 0
-    const restart = wake | 0x80; // Set restart bit to 1
-    const PrescaleReg = 0xFE //the prescale register address
-    const chipResolution = 4096;
-    export enum PinNum {
-        Pin0 = 0,
-        Pin1 = 1,
-        Pin2 = 2,
-        Pin3 = 3,
-        Pin4 = 4,
-        Pin5 = 5,
-        Pin6 = 6,
-        Pin7 = 7,
-        Pin8 = 8,
-        Pin9 = 9,
-        Pin10 = 10,
-        Pin11 = 11,
-        Pin12 = 12,
-        Pin13 = 13,
-        Pin14 = 14,
-        Pin15 = 15,
-    }
     function write(chipAddress: number, register: number, value: number): void {
         const buffer = pins.createBuffer(2)
         buffer[0] = register
@@ -70,6 +36,7 @@ namespace qcar {
            write(64, 0x13, (0 >> 8) & 0x0F)
            write(64, 0x14, 4095 & 0xFF)
            write(64, 0x15, (4095 >> 8) & 0x0F)
+           led.plot(1,1)
         } else if (dir == 1) {
             //left motor back
             write(64, 0x0E, 0 & 0xFF)
