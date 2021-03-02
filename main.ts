@@ -82,6 +82,15 @@ namespace qcar {
         Pin15 = 15,
     }
 
+    export class ServoConfigObject {
+        id: number;
+        pinNumber: number;
+        minOffset: number;
+        midOffset: number;
+        maxOffset: number;
+        position: number;
+    }
+
     export function getChipConfig(address: number): ChipConfig {
         for (let i = 0; i < chips.length; i++) {
             if (chips[i].address === address) {
