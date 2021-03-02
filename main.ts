@@ -179,6 +179,10 @@ namespace qcar {
 
     export const chips: ChipConfig[] = []
 
+    
+    function calcFreqPrescaler(freq: number): number {
+        return (25000000 / (freq * chipResolution)) - 1;
+    }
 
     export function degrees180ToPWM(freq: number, degrees: number, offsetStart: number, offsetEnd: number): number {
         // Calculate the offset of the off point in the freq
@@ -557,7 +561,7 @@ namespace qcar {
         // High byte of offStep
         write(chipAddress, pinOffset + channel0OffStepHighByte, (offStep >> 8) & 0x0F)
     }
-    
+
         /**
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
      * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
