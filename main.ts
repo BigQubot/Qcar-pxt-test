@@ -46,10 +46,10 @@ namespace qcar {
     const PrescaleReg = 0xFE //the prescale register address
     const chipResolution = 4096;
     export enum ServoNum {
-        Servo5 = 1,
-        Servo6 = 2,
-        Servo7 = 3,
-        Servo8 = 4
+        Servo1 = 5,
+        Servo2 = 6,
+        Servo3 = 7,
+        Servo4 = 8
     }
     export enum PinNum {
         Pin0 = 0,
