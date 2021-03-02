@@ -591,19 +591,17 @@ namespace qcar {
 
         /**
      * Used to move the given servo to the specified degrees (0-180) connected to the PCA9685
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
      * @param servoNum The number (1-16) of the servo to move
      * @param degrees The degrees (0-180) to move the servo to
      */
     //% block advanced=true
-    export function setServoPosition(servoNum: ServoNum = 1, degrees: number, chipAddress: number = 0x40): void {
-        const chip = getChipConfig(chipAddress)
-        servoNum = Math.max(1, Math.min(16, servoNum))
+    export function setServoPosition(servoNum: ServoNum = 1, degrees: number): void {
+        const chip = getChipConfig(0x40)
         degrees = Math.max(0, Math.min(180, degrees))
         const servo: ServoConfig = chip.servos[servoNum - 1]
         const pwm = degrees180ToPWM(chip.freq, degrees, servo.minOffset, servo.maxOffset)
         servo.position = degrees
         servo.debug()
-        return setPinPulseRange(servo.pinNumber, 0, pwm, chipAddress)
+        return setPinPulseRange(servo.pinNumber, 0, pwm, 0x40)
     }
 }
