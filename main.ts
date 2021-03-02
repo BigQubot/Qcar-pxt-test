@@ -139,6 +139,39 @@ namespace qcar {
         }
     }
 
+
+    export class ChipConfig {
+        address: number;
+        servos: ServoConfig[];
+        freq: number;
+        constructor(address: number = 0x40, freq: number = 50) {
+            this.address = address
+            this.servos = [
+                new ServoConfig(1, DefaultServoConfig),
+                new ServoConfig(2, DefaultServoConfig),
+                new ServoConfig(3, DefaultServoConfig),
+                new ServoConfig(4, DefaultServoConfig),
+                new ServoConfig(5, DefaultServoConfig),
+                new ServoConfig(6, DefaultServoConfig),
+                new ServoConfig(7, DefaultServoConfig),
+                new ServoConfig(8, DefaultServoConfig),
+                new ServoConfig(9, DefaultServoConfig),
+                new ServoConfig(10, DefaultServoConfig),
+                new ServoConfig(11, DefaultServoConfig),
+                new ServoConfig(12, DefaultServoConfig),
+                new ServoConfig(13, DefaultServoConfig),
+                new ServoConfig(14, DefaultServoConfig),
+                new ServoConfig(15, DefaultServoConfig),
+                new ServoConfig(16, DefaultServoConfig)
+            ]
+            this.freq = freq
+            init(address, freq)
+        }
+    }
+
+    export const chips: ChipConfig[] = []
+
+
     export function degrees180ToPWM(freq: number, degrees: number, offsetStart: number, offsetEnd: number): number {
         // Calculate the offset of the off point in the freq
         offsetEnd = calcFreqOffset(freq, offsetEnd)
