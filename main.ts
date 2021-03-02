@@ -108,34 +108,6 @@ namespace qcar {
             this.init(config)
         }
 
-    /**
-     * Used to set the duty cycle (0-100) of a given led connected to the PCA9685
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
-     * @param ledNumber The number (1-16) of the LED to set the duty cycle on
-     * @param dutyCycle The duty cycle (0-100) to set the LED to
-     */
-    //% block
-    export function setLedDutyCycle(ledNum: LEDNum = 1, dutyCycle: number, chipAddress: number = 0x40): void {
-        ledNum = Math.max(1, Math.min(16, ledNum))
-        dutyCycle = Math.max(0, Math.min(100, dutyCycle))
-        const pwm = (dutyCycle * (chipResolution - 1)) / 100
-        debug(`setLedDutyCycle(${ledNum}, ${dutyCycle}, ${chipAddress})`)
-        return setPinPulseRange(ledNum - 1, 0, pwm, chipAddress)
-    }
-
-    function degrees180ToPWM(freq: number, degrees: number, offsetStart: number, offsetEnd: number): number {
-        // Calculate the offset of the off point in the freq
-        offsetEnd = calcFreqOffset(freq, offsetEnd)
-        offsetStart = calcFreqOffset(freq, offsetStart)
-        const spread: number = offsetEnd - offsetStart
-        const calcOffset: number = ((degrees * spread) / 180) + offsetStart
-        // Clamp it to the bounds
-        return Math.max(offsetStart, Math.min(offsetEnd, calcOffset))
-    }
-
-
-
-
 
     function write(chipAddress: number, register: number, value: number): void {
         const buffer = pins.createBuffer(2)
