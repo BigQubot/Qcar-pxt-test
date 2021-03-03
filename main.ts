@@ -537,7 +537,6 @@ namespace qcar {
      */
     //% block advanced=true
     export function init(newFreq: number = 50) {
-        const buf = pins.createBuffer(2)
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
 
