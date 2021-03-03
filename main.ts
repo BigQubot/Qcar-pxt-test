@@ -196,10 +196,8 @@ namespace qcar {
 
 
     function write(chipAddress: number, register: number, value: number): void {
-        const buffer = pins.createBuffer(2)
-        buffer[0] = register
-        buffer[1] = value
-        pins.i2cWriteBuffer(chipAddress, buffer, false)
+        data = (register << 8) & value
+        pins.i2cWriteNumber(chipAddress, data, NumberFormat.Int16BE, false);
     }
 
     export enum Patrol {
