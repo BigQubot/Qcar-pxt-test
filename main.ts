@@ -416,10 +416,10 @@ namespace qcar {
    export function QCar_Direction(Car_Direction: Direction): void {
     if (Car_Direction == Direction.foward) {
 
-        write(64, 0x06, 0 & 0xFF)
-        write(64, 0x07, (0 >> 8) & 0x0F)
-        write(64, 0x08, 4095 & 0xFF)
-        write(64, 0x09, (4095 >> 8) & 0x0F)
+        pins.i2cWriteNumber(64, 0x0600, NumberFormat.Int16BE, false);
+        pins.i2cWriteNumber(64, 0x0700, NumberFormat.Int16BE, false);
+        pins.i2cWriteNumber(64, 0x08FF, NumberFormat.Int16BE, false);
+        pins.i2cWriteNumber(64, 0x090f, NumberFormat.Int16BE, false);
             
         write(64, 0x0A, 4095 & 0xFF)
         write(64, 0x0B, (4095 >> 8) & 0x0F)
@@ -560,33 +560,6 @@ namespace qcar {
 
         // High byte of offStep
         write(chipAddress, pinOffset + channel0OffStepHighByte, (offStep >> 8) & 0x0F)
-    }
-
-        /**
-     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
-     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
-     */
-    //% block advanced=true
-    export function init(chipAddress: number = 0x40, newFreq: number = 50) {
-        debug(`Init chip at address ${chipAddress} to ${newFreq}Hz`)
-        const buf = pins.createBuffer(2)
-        const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
-        const prescaler = calcFreqPrescaler(freq)
-
-        write(chipAddress, modeRegister1, sleep)
-
-        write(chipAddress, PrescaleReg, prescaler)
-
-        write(chipAddress, allChannelsOnStepLowByte, 0x00)
-        write(chipAddress, allChannelsOnStepHighByte, 0x00)
-        write(chipAddress, allChannelsOffStepLowByte, 0x00)
-        write(chipAddress, allChannelsOffStepHighByte, 0x00)
-
-        write(chipAddress, modeRegister1, wake)
-
-        control.waitMicros(1000)
-        write(chipAddress, modeRegister1, restart)
     }
 
         /**
