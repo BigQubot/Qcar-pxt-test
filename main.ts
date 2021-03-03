@@ -9,7 +9,7 @@ namespace qcar {
 
     function write(register: number, value: number): void {
         const data = (register << 8) & value
-        pins.i2cWriteNumber(data, NumberFormat.Int16BE, false);
+        pins.i2cWriteNumber(0x40,data, NumberFormat.Int16BE, false);
     }
     
     export enum Patrol {
