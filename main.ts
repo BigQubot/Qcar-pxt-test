@@ -6,12 +6,18 @@ enum PingUnit {
 
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
+    
+    const chipResolution = 4096;
 
     function write(register: number, value: number): void {
         const data = (register << 8) & value
         pins.i2cWriteNumber(0x40,data, NumberFormat.Int16BE, false);
     }
-    
+
+    function calcFreqPrescaler(freq: number): number {
+        return (25000000 / (freq * chipResolution)) - 1;
+    }
+
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
         PatrolLeft = 2,
@@ -264,4 +270,29 @@ namespace qcar {
             write(0x15, (4095 >> 8) & 0x0F)
         } 
     }
+
+        /**
+     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.\
+     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
+     */
+    //% block advanced=true
+    export function init(newFreq: number = 50) {
+        const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
+        const prescaler = calcFreqPrescaler(freq)
+
+        write(modeRegister1, sleep)
+
+        write(PrescaleReg, prescaler)
+
+        write(allChannelsOnStepLowByte, 0x00)
+        write(allChannelsOnStepHighByte, 0x00)
+        write(allChannelsOffStepLowByte, 0x00)
+        write(allChannelsOffStepHighByte, 0x00)
+
+        write(modeRegister1, wake)
+
+        control.waitMicros(1000)
+        write(modeRegister1, restart)
+    }
+
 }
