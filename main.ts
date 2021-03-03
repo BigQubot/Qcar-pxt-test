@@ -173,7 +173,7 @@ namespace qcar {
                 new ServoConfig(16, DefaultServoConfig)
             ]
             this.freq = freq
-            init(address, freq)
+            init(freq)
         }
     }
 
