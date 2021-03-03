@@ -521,7 +521,6 @@ namespace qcar {
      */
     //% block advanced=true
     export function Motor_init(newFreq: number = 50) {
-        const buf = pins.createBuffer(2)
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
 
@@ -549,7 +548,6 @@ namespace qcar {
     //% block advanced=true
     export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048): void {
         pinNumber = Math.max(0, Math.min(15, pinNumber))
-        const buffer = pins.createBuffer(2)
         const pinOffset = PinRegDistance * pinNumber
         onStep = Math.max(0, Math.min(4095, onStep))
         offStep = Math.max(0, Math.min(4095, offStep))
