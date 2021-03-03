@@ -532,6 +532,31 @@ namespace qcar {
 }
 
     /**
+     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
+     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
+     */
+    //% block advanced=true
+    export function init(newFreq: number = 50) {
+        const buf = pins.createBuffer(2)
+        const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
+        const prescaler = calcFreqPrescaler(freq)
+
+        write(0x40, modeRegister1, sleep)
+
+        write(0x40, PrescaleReg, prescaler)
+
+        write(0x40, allChannelsOnStepLowByte, 0x00)
+        write(0x40, allChannelsOnStepHighByte, 0x00)
+        write(0x40, allChannelsOffStepLowByte, 0x00)
+        write(0x40, allChannelsOffStepHighByte, 0x00)
+
+        write(0x40, modeRegister1, wake)
+
+        control.waitMicros(1000)
+        write(0x40, modeRegister1, restart)
+    }
+
+    /**
      * Used to set the pulse range (0-4095) of a given pin on the PCA9685
      * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
      * @param pinNumber The pin number (0-15) to set the pulse range on
