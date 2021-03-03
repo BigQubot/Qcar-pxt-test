@@ -414,10 +414,6 @@ namespace qcar {
    //% weight=95 blockGap=8
 
    export function QCar_Direction(Car_Direction: Direction): void {
-       pins.i2cWriteNumber(64, 0xFA00, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0xFB00, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0xFC00, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0xFD00, NumberFormat.Int16BE, false);
     if (Car_Direction == Direction.foward) {
 
         pins.i2cWriteNumber(64, 0x0600, NumberFormat.Int16BE, false);
