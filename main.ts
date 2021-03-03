@@ -524,9 +524,9 @@ namespace qcar {
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
 
-        write(0x40, modeRegister1, sleep) 0x11
+        write(0x40, modeRegister1, sleep)
 
-        write(0x40, PrescaleReg, prescaler) 0xfe 
+        write(0x40, PrescaleReg, prescaler)
 
         write(0x40, allChannelsOnStepLowByte, 0x00)
         write(0x40, allChannelsOnStepHighByte, 0x00)
