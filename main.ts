@@ -158,19 +158,7 @@ namespace qcar {
                 new ServoConfig(1, DefaultServoConfig),
                 new ServoConfig(2, DefaultServoConfig),
                 new ServoConfig(3, DefaultServoConfig),
-                new ServoConfig(4, DefaultServoConfig),
-                new ServoConfig(5, DefaultServoConfig),
-                new ServoConfig(6, DefaultServoConfig),
-                new ServoConfig(7, DefaultServoConfig),
-                new ServoConfig(8, DefaultServoConfig),
-                new ServoConfig(9, DefaultServoConfig),
-                new ServoConfig(10, DefaultServoConfig),
-                new ServoConfig(11, DefaultServoConfig),
-                new ServoConfig(12, DefaultServoConfig),
-                new ServoConfig(13, DefaultServoConfig),
-                new ServoConfig(14, DefaultServoConfig),
-                new ServoConfig(15, DefaultServoConfig),
-                new ServoConfig(16, DefaultServoConfig)
+                new ServoConfig(4, DefaultServoConfig)
             ]
             this.freq = freq
             init(freq)
@@ -414,10 +402,10 @@ namespace qcar {
    export function QCar_Direction(Car_Direction: Direction): void {
     if (Car_Direction == Direction.foward) {
 
-        pins.i2cWriteNumber(64, 0x0600, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x0700, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x08FF, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x090f, NumberFormat.Int16BE, false);
+        write(64, 0x06, 0 & 0xFF)
+        write(64, 0x07, (0 >> 8) & 0x0F)
+        write(64, 0x08, 4095 & 0xFF)
+        write(64, 0x09, (4095 >> 8) & 0x0F)
             
         write(64, 0x0A, 4095 & 0xFF)
         write(64, 0x0B, (4095 >> 8) & 0x0F)
@@ -528,19 +516,18 @@ namespace qcar {
         write(64, 0x15, (4095 >> 8) & 0x0F)
     } 
 }
-
     /**
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
      */
     //% block advanced=true
-    export function init(newFreq: number = 50) {
+    export function Motor_init(newFreq: number = 50) {
         const buf = pins.createBuffer(2)
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
 
-        write(0x40, modeRegister1, sleep)
+        write(0x40, modeRegister1, sleep) 0x11
 
-        write(0x40, PrescaleReg, prescaler)
+        write(0x40, PrescaleReg, prescaler) 0xfe 
 
         write(0x40, allChannelsOnStepLowByte, 0x00)
         write(0x40, allChannelsOnStepHighByte, 0x00)
@@ -555,33 +542,29 @@ namespace qcar {
 
     /**
      * Used to set the pulse range (0-4095) of a given pin on the PCA9685
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
      * @param pinNumber The pin number (0-15) to set the pulse range on
      * @param onStep The range offset (0-4095) to turn the signal on
      * @param offStep The range offset (0-4095) to turn the signal off
      */
     //% block advanced=true
-    export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = 0x40): void {
+    export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048): void {
         pinNumber = Math.max(0, Math.min(15, pinNumber))
         const buffer = pins.createBuffer(2)
         const pinOffset = PinRegDistance * pinNumber
         onStep = Math.max(0, Math.min(4095, onStep))
         offStep = Math.max(0, Math.min(4095, offStep))
 
-        debug(`setPinPulseRange(${pinNumber}, ${onStep}, ${offStep}, ${chipAddress})`)
-        debug(`  pinOffset ${pinOffset}`)
-
         // Low byte of onStep
-        write(chipAddress, pinOffset + channel0OnStepLowByte, onStep & 0xFF)
+        write(0x40, pinOffset + channel0OnStepLowByte, onStep & 0xFF)
 
         // High byte of onStep
-        write(chipAddress, pinOffset + channel0OnStepHighByte, (onStep >> 8) & 0x0F)
+        write(0x40, pinOffset + channel0OnStepHighByte, (onStep >> 8) & 0x0F)
 
         // Low byte of offStep
-        write(chipAddress, pinOffset + channel0OffStepLowByte, offStep & 0xFF)
+        write(0x40, pinOffset + channel0OffStepLowByte, offStep & 0xFF)
 
         // High byte of offStep
-        write(chipAddress, pinOffset + channel0OffStepHighByte, (offStep >> 8) & 0x0F)
+        write(0x40, pinOffset + channel0OffStepHighByte, (offStep >> 8) & 0x0F)
     }
 
         /**
@@ -597,6 +580,6 @@ namespace qcar {
         const pwm = degrees180ToPWM(chip.freq, degrees, servo.minOffset, servo.maxOffset)
         servo.position = degrees
         servo.debug()
-        return setPinPulseRange(servo.pinNumber, 0, pwm, 0x40)
+        return setPinPulseRange(servo.pinNumber, 0, pwm)
     }
 }
