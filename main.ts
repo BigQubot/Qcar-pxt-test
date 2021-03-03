@@ -202,8 +202,7 @@ namespace qcar {
         pins.i2cWriteNumber(chipAddress, data, NumberFormat.Int16BE, false);
     }
 
-
-
+    
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
         PatrolLeft = 2,
@@ -418,29 +417,25 @@ namespace qcar {
    export function QCar_Direction(Car_Direction: Direction): void {
     if (Car_Direction == Direction.foward) {
 
-        pins.i2cWriteNumber(64, 0x0600, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x0700, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x08FF, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x090f, NumberFormat.Int16BE, false);
+        write(64, 0x06, 0 & 0xFF)
+        write(64, 0x07, (0 >> 8) & 0x0F)
+        write(64, 0x08, 4095 & 0xFF)
+        write(64, 0x09, (4095 >> 8) & 0x0F)
+            
+        write(64, 0x0A, 4095 & 0xFF)
+        write(64, 0x0B, (4095 >> 8) & 0x0F)
+        write(64, 0x0C, 0 & 0xFF)
+        write(64, 0x0D, (0 >> 8) & 0x0F)
 
-        
+        write(64, 0x0E, 4095 & 0xFF)
+        write(64, 0x0F, (4095 >> 8) & 0x0F)
+        write(64, 0x10, 0 & 0xFF)
+        write(64, 0x11, (0 >> 8) & 0x0F)
 
-        pins.i2cWriteNumber(64, 0x0AFF, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x0B0F, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x0C00, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x0D00, NumberFormat.Int16BE, false);
-
-        pins.i2cWriteNumber(64, 0x1200, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x1300, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x14FF, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x150f, NumberFormat.Int16BE, false);
-
-        
-
-        pins.i2cWriteNumber(64, 0x0EFF, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x0F0F, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x1000, NumberFormat.Int16BE, false);
-        pins.i2cWriteNumber(64, 0x1100, NumberFormat.Int16BE, false);
+        write(64, 0x12, 0 & 0xFF)
+        write(64, 0x13, (0 >> 8) & 0x0F)
+        write(64, 0x14, 4095 & 0xFF)
+        write(64, 0x15, (4095 >> 8) & 0x0F)
     } 
     else if (Car_Direction == Direction.back) {
 
