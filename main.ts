@@ -161,7 +161,7 @@ namespace qcar {
                 new ServoConfig(4, DefaultServoConfig)
             ]
             this.freq = freq
-            init(freq)
+            init()
         }
     }
 
@@ -520,8 +520,8 @@ namespace qcar {
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
      */
     //% block advanced=true
-    export function Motor_init(newFreq: number = 50) {
-        const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
+    export function init() {
+        const freq = 50
         const prescaler = calcFreqPrescaler(freq)
 
         write(0x40, modeRegister1, sleep)
