@@ -414,6 +414,10 @@ namespace qcar {
    //% weight=95 blockGap=8
 
    export function QCar_Direction(Car_Direction: Direction): void {
+       pins.i2cWriteNumber(64, 0xFA00, NumberFormat.Int16BE, false);
+        pins.i2cWriteNumber(64, 0xFB00, NumberFormat.Int16BE, false);
+        pins.i2cWriteNumber(64, 0xFC00, NumberFormat.Int16BE, false);
+        pins.i2cWriteNumber(64, 0xFD00, NumberFormat.Int16BE, false);
     if (Car_Direction == Direction.foward) {
 
         pins.i2cWriteNumber(64, 0x0600, NumberFormat.Int16BE, false);
@@ -533,7 +537,6 @@ namespace qcar {
 
     /**
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
-     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
      */
     //% block advanced=true
     export function init(newFreq: number = 50) {
