@@ -7,7 +7,17 @@ enum PingUnit {
 //% weight=0 color=#00BFFF icon="\uf2c4" block="Qcar"
 namespace qcar {
     
+    const modeRegister1 = 0x00 // MODE1
     const chipResolution = 4096;
+    const modeRegister1Default = 0x01
+    const sleep = modeRegister1Default | 0x10; // Set sleep bit to 1
+    const wake = modeRegister1Default & 0xEF; // Set sleep bit to 0
+    const restart = wake | 0x80; // Set restart bit to 1
+    const PrescaleReg = 0xFE //the prescale register address
+    const allChannelsOnStepLowByte = 0xFA // ALL_LED_ON_L
+    const allChannelsOnStepHighByte = 0xFB // ALL_LED_ON_H
+    const allChannelsOffStepLowByte = 0xFC // ALL_LED_OFF_L
+    const allChannelsOffStepHighByte = 0xFD // ALL_LED_OFF_H
 
     function write(register: number, value: number): void {
         const data = (register << 8) & value
