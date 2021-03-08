@@ -28,24 +28,6 @@ namespace qcar {
         return (25000000 / (freq * chipResolution)) - 1;
     }
 
-    function stripHexPrefix(str: string): string {
-        if (str.length === 2) {
-            return str
-        }
-        if (str.substr(0, 2) === '0x') {
-            return str.substr(-2, 2)
-        }
-        return str
-    }
-
-    
-    function toHexString(n: number) {
-        if(n < 0) {
-            n = 0xFFFFFFFF + n + 1;
-        }
-        return "0x" + ("00000000" + n.toString(16).toUpperCase()).substr(-8);
-    }
-
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
         PatrolLeft = 2,
