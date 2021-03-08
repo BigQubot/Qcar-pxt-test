@@ -38,6 +38,14 @@ namespace qcar {
         return str
     }
 
+    
+    function toHexString(n) {
+        if(n < 0) {
+            n = 0xFFFFFFFF + n + 1;
+        }
+        return "0x" + ("00000000" + n.toString(16).toUpperCase()).substr(-8);
+    }
+
     export enum Patrol {
         //% blockId="patrolLeft" block="left"
         PatrolLeft = 2,
@@ -106,9 +114,9 @@ namespace qcar {
     */
     //% blockId="areaOfRectangle" block="area of rectangle length %length|width %width"
     //% blockGap=2 weight=0 blockExternalInputs=true
-    export function areaOfRectangle(length: string, width:string): number {
-        length = stripHexPrefix(length)
-        width = stripHexPrefix(width)
+    export function areaOfRectangle(length: number, width:number): number {
+        length = toHexString(length)
+        width = number(width)
         var test = (length << 8) & width
         return test
     }
