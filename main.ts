@@ -61,7 +61,7 @@ namespace qcar {
      */
 
     //% blockId=ultrasonic_sensor block="read ultrasonic sensor |%unit "
-    //% weight=95
+    //% weight=10
     export function Ultrasonic(unit: PingUnit, maxCmDistance = 500): number {
         let d
         pins.digitalWritePin(DigitalPin.P12, 1);
@@ -115,7 +115,7 @@ namespace qcar {
 
    //% blockId=IR_Enable block="Set the infrared status to |%irstatus"
    //% irstatus.fieldEditor="gridpicker" irstatus.fieldOptions.columns=2 
-   //% weight=93 blockGap=8
+   //% weight=30 blockGap=8
 
    export function IREnable(IRstatus: irstatus): void {
        if (IRstatus == irstatus.iron) {
@@ -130,7 +130,7 @@ namespace qcar {
     */
 
    //% blockId=Stop_QCar block="Stop the Q-Car"
-   //% weight=94 blockGap=8
+   //% weight=40 blockGap=8
 
    export function Stop(): void {
 
@@ -163,7 +163,7 @@ namespace qcar {
 
    //% blockId=Q-Car_Direction block="Let the Q-Car |%Direction"
    //% Direction.fieldEditor="gridpicker" Direction.fieldOptions.columns=5 
-   //% weight=95 blockGap=8
+   //% weight=50 blockGap=8
 
    export function QCar_Direction(Car_Direction: Direction): void {
        if (Car_Direction == Direction.foward) {
@@ -280,11 +280,17 @@ namespace qcar {
             write(0x15, (4095 >> 8) & 0x0F)
         } 
     }
+   /**
+    * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs..
+    */
 
+   //% blockId=init block="init |%newFreq"
+   //% weight=60 blockGap=8
         /**
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.\
-     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
+     * 
      */
+    //% block advanced=true
     export function init(newFreq: number = 50) {
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
