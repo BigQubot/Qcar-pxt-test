@@ -91,6 +91,17 @@ namespace qcar {
     }
 
 
+    /**
+    * 計算長方形面積，並回傳
+    */
+    //% blockId="areaOfRectangle" block="area of rectangle length %length|width %width"
+    //% blockGap=2 weight=0 blockExternalInputs=true
+    export function areaOfRectangle(length: number, width:number): number {
+        let test = (length << 8) & width
+        return test
+    }
+
+
      /**
      * Read line tracking sensor.
      */
