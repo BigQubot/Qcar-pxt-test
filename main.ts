@@ -353,17 +353,15 @@ namespace qcar {
                 write(0x40, 0x0B, (0 >> 8) & 0x0F)
                 write(0x40, 0x0C, 0 & 0xFF)
                 write(0x40, 0x0D, (0 >> 8) & 0x0F)
-        }
-        if (index == 1) {
-            if (direction == Forward) {
-            
             }
-            if (direction == Backward) {
-            
+            if (index == 1) {
+                if (direction == Forward) {
+
+                }
+                if (direction == Backward) {
+
+                }
             }
-        }
+        }    
     }
-
-
-
 }
