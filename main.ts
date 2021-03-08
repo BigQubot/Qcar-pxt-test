@@ -20,7 +20,7 @@ namespace qcar {
     const allChannelsOffStepHighByte = 0xFD // ALL_LED_OFF_H
 
     function write(chipAddress: number, register: number, value: number): void {
-        const data = (register << 8) & value;
+        let data = ((register<<8)+value)
         pins.i2cWriteNumber(chipAddress, data, NumberFormat.Int16BE, false);
     }
 
@@ -88,17 +88,6 @@ namespace qcar {
             default: return Math.idiv(d, 2.54);
         }
 
-    }
-
-
-    /**
-    * 計算長方形面積，並回傳
-    */
-    //% blockId="areaOfRectangle" block="area of rectangle length %length|width %width"
-    //% blockGap=2 weight=0 blockExternalInputs=true
-    export function areaOfRectangle(length : number, width : number): number {
-        let test = (length << 8) & width
-        return test
     }
 
 
