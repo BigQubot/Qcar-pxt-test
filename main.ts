@@ -57,12 +57,10 @@ namespace qcar {
     }    
     
     export enum Dire {
-        export enum Dir {
-            //% blockId="Forward" block="Forward"
-            Forward = 0,
-            //% blockId="Forward" block="Backward"
-            Backward = 1
-        }
+        //% blockId="Forward" block="Forward"
+        Forward = 0,
+        //% blockId="Forward" block="Backward"
+        Backward = 1
     }
     
 
