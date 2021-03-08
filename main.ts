@@ -280,12 +280,12 @@ namespace qcar {
             write(0x15, (4095 >> 8) & 0x0F)
         } 
     }
-    /**
-    * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs..
-    */
 
-    //% blockId=init block="init |%newFreq"
-    //% weight=60 blockGap=8
+        /**
+     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.\
+     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
+     */
+    //% block advanced=true
     export function init(newFreq: number = 50) {
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
