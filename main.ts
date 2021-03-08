@@ -296,7 +296,7 @@ namespace qcar {
      * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
      */
     //% block advanced=true
-    export function init() {
+    export function init The Motor() {
         const freq = 50
         const prescaler = calcFreqPrescaler(freq)
 
