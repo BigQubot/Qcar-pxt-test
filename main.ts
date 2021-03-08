@@ -332,24 +332,38 @@ namespace qcar {
 
     //% weight=90
     //% blockId=motor_MotorRun block="motor|%index|move|%Dire|at speed|%speed"
-    //% speed.min=0 speed.max=255
+    //% speed.min=0 speed.max=10
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2
     //% direction.fieldEditor="gridpicker" direction.fieldOptions.columns=2
     export function motorRun(index: Motors, direction: Dire, speed: number): void {
         let pulsetime = Math.map(speed, 0, 10, 0, 4095)
         if (index == 0) {
             if (direction == Dire.Forward) {
-                write(0x40, 0x06, 0 & 0xFF)
-                write(0x40, 0x07, (0 >> 8) & 0x0F)
-                write(0x40, 0x08, 0 & 0xFF)
-                write(0x40, 0x09, (0 >> 8) & 0x0F)
-                    
-                write(0x40, 0x0A, 0 & 0xFF)
-                write(0x40, 0x0B, (0 >> 8) & 0x0F)
-                write(0x40, 0x0C, pulsetime & 0xFF)
-                write(0x40, 0x0D, (pulsetime >> 8) & 0x0F)
+                write(0x40, 0x0E, 0 & 0xFF)
+                write(0x40, 0x0F, (0 >> 8) & 0x0F)
+                write(0x40, 0x10, 0 & 0xFF)
+                write(0x40, 0x11, (0 >> 8) & 0x0F)
+    
+                write(0x40, 0x12, 0 & 0xFF)
+                write(0x40, 0x13, (0 >> 8) & 0x0F)
+                write(0x40, 0x14, pulsetime & 0xFF)
+                write(0x40, 0x15, (pulsetime >> 8) & 0x0F)
             }
             if (direction == Dire.Backward) {
+                write(0x40, 0x0E, 0 & 0xFF)
+                write(0x40, 0x0F, (0 >> 8) & 0x0F)
+                write(0x40, 0x10, pulsetime & 0xFF)
+                write(0x40, 0x11, (pulsetime >> 8) & 0x0F)
+    
+                write(0x40, 0x12, 0 & 0xFF)
+                write(0x40, 0x13, (0 >> 8) & 0x0F)
+                write(0x40, 0x14, 0 & 0xFF)
+                write(0x40, 0x15, (0  >> 8) & 0x0F)
+            }
+        }    
+        
+        if (index == 1) {
+            if (direction == Dire.Forward) {
                 write(0x40, 0x06, 0 & 0xFF)
                 write(0x40, 0x07, (0 >> 8) & 0x0F)
                 write(0x40, 0x08, pulsetime & 0xFF)
@@ -360,14 +374,17 @@ namespace qcar {
                 write(0x40, 0x0C, 0 & 0xFF)
                 write(0x40, 0x0D, (0 >> 8) & 0x0F)
             }
-            if (index == 1) {
-                if (direction == Dire.Forward) {
-
-                }
-                if (direction == Dire.Backward) {
-
-                }
+            if (direction == Dire.Backward) {
+                write(0x40, 0x06, 0 & 0xFF)
+                write(0x40, 0x07, (0 >> 8) & 0x0F)
+                write(0x40, 0x08, 0 & 0xFF)
+                write(0x40, 0x09, (0 >> 8) & 0x0F)
+                    
+                write(0x40, 0x0A, 0 & 0xFF)
+                write(0x40, 0x0B, (0 >> 8) & 0x0F)
+                write(0x40, 0x0C, pulsetime & 0xFF)
+                write(0x40, 0x0D, (pulsetime >> 8) & 0x0F)
             }
-        }    
+        }
     }
 }
