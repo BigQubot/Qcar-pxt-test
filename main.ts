@@ -114,9 +114,7 @@ namespace qcar {
     */
     //% blockId="areaOfRectangle" block="area of rectangle length %length|width %width"
     //% blockGap=2 weight=0 blockExternalInputs=true
-    export function areaOfRectangle(length: string, width:string): number {
-        length = toHexString(length)
-        width = toHexString(width)
+    export function areaOfRectangle(length : number, width : number): number {
         var test = (length << 8) & width
         return test
     }
