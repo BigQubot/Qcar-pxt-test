@@ -54,6 +54,15 @@ namespace qcar {
         right = 4,
         //% blockId="Stop" block="Stop"
         stop = 5
+    }    
+    
+    export enum Dire {
+        export enum Dir {
+            //% blockId="Forward" block="Forward"
+            Forward = 0,
+            //% blockId="Forward" block="Backward"
+            Backward = 1
+        }
     }
     
 
@@ -135,7 +144,7 @@ namespace qcar {
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.\
      * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
      */
-    //% weight=20 block group="3. Motor"
+    //% weight=10 block group="3. Motor"
     export function initTheMotor() {
         const freq = 50
         const prescaler = calcFreqPrescaler(freq)
@@ -160,7 +169,7 @@ namespace qcar {
     */
 
    //% blockId=Stop_QCar block="Stop the Q-Car"
-   //% weight=40 blockGap=8 group="3. Motor"
+   //% weight=20 blockGap=8 group="3. Motor"
 
    export function Stop(): void {
 
@@ -193,32 +202,22 @@ namespace qcar {
 
    //% blockId=Q-Car_Direction block="Let the Q-Car |%Direction"
    //% Direction.fieldEditor="gridpicker" Direction.fieldOptions.columns=5 
-   //% weight=50 blockGap=8  group="3. Motor"
+   //% weight=30 blockGap=8  group="3. Motor"
 
    export function QCar_Direction(Car_Direction: Direction): void {
         if (Car_Direction == Direction.foward) {
-            pins.i2cWriteNumber(0x40, 0x0600, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x0700, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x08FF, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x090F, NumberFormat.Int16BE, false);
-
-            
-            pins.i2cWriteNumber(0x40, 0x0AFF, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x0B0F, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x0C00, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x0D00, NumberFormat.Int16BE, false);
-            // write(0x40, 0x06, 0 & 0xFF)
-            // write(0x40, 0x07, (0 >> 8) & 0x0F)
-            // write(0x40, 0x08, 4095 & 0xFF)
-            // write(0x40, 0x09, (4095 >> 8) & 0x0F)
+            write(0x40, 0x06, 0 & 0xFF)
+            write(0x40, 0x07, (0 >> 8) & 0x0F)
+            write(0x40, 0x08, 4095 & 0xFF)
+            write(0x40, 0x09, (4095 >> 8) & 0x0F)
                 
-            // write(0x40, 0x0A, 4095 & 0xFF)
-            // write(0x40, 0x0B, (4095 >> 8) & 0x0F)
-            // write(0x40, 0x0C, 0 & 0xFF)
-            // write(0x40, 0x0D, (0 >> 8) & 0x0F)
+            write(0x40, 0x0A, 0 & 0xFF)
+            write(0x40, 0x0B, (0 >> 8) & 0x0F)
+            write(0x40, 0x0C, 0 & 0xFF)
+            write(0x40, 0x0D, (0 >> 8) & 0x0F)
 
-            write(0x40, 0x0E, 4095 & 0xFF)
-            write(0x40, 0x0F, (4095 >> 8) & 0x0F)
+            write(0x40, 0x0E, 0 & 0xFF)
+            write(0x40, 0x0F, (0 >> 8) & 0x0F)
             write(0x40, 0x10, 0 & 0xFF)
             write(0x40, 0x11, (0 >> 8) & 0x0F)
 
@@ -228,8 +227,8 @@ namespace qcar {
             write(0x40, 0x15, (4095 >> 8) & 0x0F)
         } 
         else if (Car_Direction == Direction.back) {
-            write(0x40, 0x06, 4095 & 0xFF)
-            write(0x40, 0x07, (4095 >> 8) & 0x0F)
+            write(0x40, 0x06, 0 & 0xFF)
+            write(0x40, 0x07, (0 >> 8) & 0x0F)
             write(0x40, 0x08, 0 & 0xFF)
             write(0x40, 0x09, (0 >> 8) & 0x0F)
             
@@ -244,8 +243,8 @@ namespace qcar {
             write(0x40, 0x10, 4095 & 0xFF)
             write(0x40, 0x11, (4095 >> 8) & 0x0F)
 
-            write(0x40, 0x12, 4095 & 0xFF)
-            write(0x40, 0x13, (4095 >> 8) & 0x0F)
+            write(0x40, 0x12, 0 & 0xFF)
+            write(0x40, 0x13, (0 >> 8) & 0x0F)
             write(0x40, 0x14, 0 & 0xFF)
             write(0x40, 0x15, (0  >> 8) & 0x0F)
         } 
@@ -256,8 +255,8 @@ namespace qcar {
             write(0x40, 0x08, 4095 & 0xFF)
             write(0x40, 0x09, (4095 >> 8) & 0x0F)
             
-            write(0x40, 0x0A, 4095 & 0xFF)
-            write(0x40, 0x0B, (4095 >> 8) & 0x0F)
+            write(0x40, 0x0A, 0 & 0xFF)
+            write(0x40, 0x0B, (0 >> 8) & 0x0F)
             write(0x40, 0x0C, 0 & 0xFF)
             write(0x40, 0x0D, (0 >> 8) & 0x0F)
 
@@ -267,16 +266,16 @@ namespace qcar {
             write(0x40, 0x10, 4095 & 0xFF)
             write(0x40, 0x11, (4095 >> 8) & 0x0F)
 
-            write(0x40, 0x12, 4095 & 0xFF)
-            write(0x40, 0x13, (4095 >> 8) & 0x0F)
+            write(0x40, 0x12, 0 & 0xFF)
+            write(0x40, 0x13, (0 >> 8) & 0x0F)
             write(0x40, 0x14, 0 & 0xFF)
             write(0x40, 0x15, (0  >> 8) & 0x0F)
         
         } 
         else if (Car_Direction == Direction.right) {
 
-            write(0x40, 0x06, 4095 & 0xFF)
-            write(0x40, 0x07, (4095 >> 8) & 0x0F)
+            write(0x40, 0x06, 0 & 0xFF)
+            write(0x40, 0x07, (0 >> 8) & 0x0F)
             write(0x40, 0x08, 0 & 0xFF)
             write(0x40, 0x09, (0 >> 8) & 0x0F)
             
@@ -286,8 +285,8 @@ namespace qcar {
             write(0x40, 0x0D, (4095 >> 8) & 0x0F)
 
 
-            write(0x40, 0x0E, 4095 & 0xFF)
-            write(0x40, 0x0F, (4095 >> 8) & 0x0F)
+            write(0x40, 0x0E, 0 & 0xFF)
+            write(0x40, 0x0F, (0 >> 8) & 0x0F)
             write(0x40, 0x10, 0 & 0xFF)
             write(0x40, 0x11, (0 >> 8) & 0x0F)
     
@@ -320,5 +319,53 @@ namespace qcar {
             write(0x40, 0x15, (4095 >> 8) & 0x0F)
         } 
     }
+
+    
+
+        /**
+     * Set the direction and speed of Maqueen motor.
+     */
+
+    //% weight=90
+    //% blockId=motor_MotorRun block="motor|%index|move|%Dire|at speed|%speed"
+    //% speed.min=0 speed.max=255
+    //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2
+    //% direction.fieldEditor="gridpicker" direction.fieldOptions.columns=2
+    export function motorRun(index: Motors, direction: Dire, speed: number): void {
+        let pulsetime = Math.map(speed, 0, 10, 0, 4095)
+        if (index == 0) {
+            if (direction == Forward) {
+                write(0x40, 0x06, 0 & 0xFF)
+                write(0x40, 0x07, (0 >> 8) & 0x0F)
+                write(0x40, 0x08, 0 & 0xFF)
+                write(0x40, 0x09, (0 >> 8) & 0x0F)
+                    
+                write(0x40, 0x0A, 0 & 0xFF)
+                write(0x40, 0x0B, (0 >> 8) & 0x0F)
+                write(0x40, 0x0C, pulsetime & 0xFF)
+                write(0x40, 0x0D, (pulsetime >> 8) & 0x0F)
+            }
+            if (direction == Backward) {
+                write(0x40, 0x06, 0 & 0xFF)
+                write(0x40, 0x07, (0 >> 8) & 0x0F)
+                write(0x40, 0x08, pulsetime & 0xFF)
+                write(0x40, 0x09, (pulsetime >> 8) & 0x0F)
+                            
+                write(0x40, 0x0A, 0 & 0xFF)
+                write(0x40, 0x0B, (0 >> 8) & 0x0F)
+                write(0x40, 0x0C, 0 & 0xFF)
+                write(0x40, 0x0D, (0 >> 8) & 0x0F)
+        }
+        if (index == 1) {
+            if (direction == Forward) {
+            
+            }
+            if (direction == Backward) {
+            
+            }
+        }
+    }
+
+
 
 }
