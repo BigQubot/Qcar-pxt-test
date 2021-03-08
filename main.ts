@@ -285,7 +285,6 @@ namespace qcar {
     */
 
     //% blockId=init block="init |%newFreq" advanced=true
-    //% weight=60 blockGap=8
     export function init(newFreq: number = 50) {
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
