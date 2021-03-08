@@ -55,13 +55,14 @@ namespace qcar {
         //% blockId="Stop" block="Stop"
         stop = 5
     }
+    
 
     /**
      * Read ultrasonic sensor.
      */
 
     //% blockId=ultrasonic_sensor block="read ultrasonic sensor |%unit "
-    //% weight=10
+    //% weight=10 group="1. Senser"
     export function Ultrasonic(unit: PingUnit, maxCmDistance = 500): number {
         let d
         pins.digitalWritePin(DigitalPin.P12, 1);
@@ -98,6 +99,7 @@ namespace qcar {
     //% weight=20
     //% blockId=read_Patrol block="read |%patrol line tracking sensor"
     //% patrol.fieldEditor="gridpicker" patrol.fieldOptions.columns=2 
+    //% group="1. Senser"
     export function readPatrol(patrol: Patrol): number {
         if (patrol == Patrol.PatrolLeft) {
             return pins.analogReadPin(AnalogPin.P2)
@@ -116,6 +118,7 @@ namespace qcar {
    //% blockId=IR_Enable block="Set the infrared status to |%irstatus"
    //% irstatus.fieldEditor="gridpicker" irstatus.fieldOptions.columns=2 
    //% weight=30 blockGap=8
+    //% group="2. Device"
 
    export function IREnable(IRstatus: irstatus): void {
        if (IRstatus == irstatus.iron) {
@@ -125,12 +128,39 @@ namespace qcar {
        } 
    }
 
+
+
+
+    /**
+     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.\
+     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
+     */
+    //% block group="3. Motor"
+    export function initTheMotor() {
+        const freq = 50
+        const prescaler = calcFreqPrescaler(freq)
+
+        write(0x40, modeRegister1, sleep)
+
+        write(0x40, PrescaleReg, prescaler)
+
+        write(0x40, allChannelsOnStepLowByte, 0x00)
+        write(0x40, allChannelsOnStepHighByte, 0x00)
+        write(0x40, allChannelsOffStepLowByte, 0x00)
+        write(0x40, allChannelsOffStepHighByte, 0x00)
+
+        write(0x40, modeRegister1, wake)
+
+        control.waitMicros(1000)
+        write(0x40, modeRegister1, restart)
+    }
+
    /**
     * Stop the Q-Car
     */
 
    //% blockId=Stop_QCar block="Stop the Q-Car"
-   //% weight=40 blockGap=8
+   //% weight=40 blockGap=8 group="3. Motor"
 
    export function Stop(): void {
 
@@ -163,7 +193,7 @@ namespace qcar {
 
    //% blockId=Q-Car_Direction block="Let the Q-Car |%Direction"
    //% Direction.fieldEditor="gridpicker" Direction.fieldOptions.columns=5 
-   //% weight=50 blockGap=8
+   //% weight=50 blockGap=8  group="3. Motor"
 
    export function QCar_Direction(Car_Direction: Direction): void {
         if (Car_Direction == Direction.foward) {
@@ -289,30 +319,6 @@ namespace qcar {
             write(0x40, 0x14, 4095 & 0xFF)
             write(0x40, 0x15, (4095 >> 8) & 0x0F)
         } 
-    }
-
-        /**
-     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.\
-     * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
-     */
-    //% block advanced=true
-    export function initTheMotor() {
-        const freq = 50
-        const prescaler = calcFreqPrescaler(freq)
-
-        write(0x40, modeRegister1, sleep)
-
-        write(0x40, PrescaleReg, prescaler)
-
-        write(0x40, allChannelsOnStepLowByte, 0x00)
-        write(0x40, allChannelsOnStepHighByte, 0x00)
-        write(0x40, allChannelsOffStepLowByte, 0x00)
-        write(0x40, allChannelsOffStepHighByte, 0x00)
-
-        write(0x40, modeRegister1, wake)
-
-        control.waitMicros(1000)
-        write(0x40, modeRegister1, restart)
     }
 
 }
