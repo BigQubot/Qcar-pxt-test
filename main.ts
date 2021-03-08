@@ -118,7 +118,7 @@ namespace qcar {
    //% blockId=IR_Enable block="Set the infrared status to |%irstatus"
    //% irstatus.fieldEditor="gridpicker" irstatus.fieldOptions.columns=2 
    //% weight=30 blockGap=8
-    //% group="2. Device"
+    //% group="2. Senser"
 
    export function IREnable(IRstatus: irstatus): void {
        if (IRstatus == irstatus.iron) {
@@ -135,7 +135,7 @@ namespace qcar {
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.\
      * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
      */
-    //% block group="3. Motor"
+    //% weight=20 block group="3. Motor"
     export function initTheMotor() {
         const freq = 50
         const prescaler = calcFreqPrescaler(freq)
