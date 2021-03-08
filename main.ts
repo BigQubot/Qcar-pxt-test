@@ -19,9 +19,9 @@ namespace qcar {
     const allChannelsOffStepLowByte = 0xFC // ALL_LED_OFF_L
     const allChannelsOffStepHighByte = 0xFD // ALL_LED_OFF_H
 
-    function write(register: number, value: number): void {
+    function write(chipAddress: number, register: number, value: number): void {
         const data = (register << 8) & value
-        pins.i2cWriteNumber(0x40,data, NumberFormat.Int16BE, false);
+        pins.i2cWriteNumber(chipAddress, data, NumberFormat.Int16BE, false);
     }
 
     function calcFreqPrescaler(freq: number): number {
@@ -135,25 +135,25 @@ namespace qcar {
    export function Stop(): void {
 
     // Low byte of onStep
-    write(0x06, 0 & 0xFF)
-    write(0x07, (0 >> 8) & 0x0F)
-    write(0x08, 4095 & 0xFF)
-    write(0x09, (4095 >> 8) & 0x0F)
+    write(0x64, 0x06, 0 & 0xFF)
+    write(0x64, 0x07, (0 >> 8) & 0x0F)
+    write(0x64, 0x08, 4095 & 0xFF)
+    write(0x64, 0x09, (4095 >> 8) & 0x0F)
         
-    write(0x0A, 0 & 0xFF)
-    write(0x0B, (0 >> 8) & 0x0F)
-    write(0x0C, 4095 & 0xFF)
-    write(0x0D, (4095 >> 8) & 0x0F)
+    write(0x64, 0x0A, 0 & 0xFF)
+    write(0x64, x0B, (0 >> 8) & 0x0F)
+    write(0x64, 0x0C, 4095 & 0xFF)
+    write(0x64, 0x0D, (4095 >> 8) & 0x0F)
 
-    write(0x0E, 0 & 0xFF)
-    write(0x0E, (0 >> 8) & 0x0F)
-    write(0x10, 4095 & 0xFF)
-    write(0x11, (4095 >> 8) & 0x0F)
+    write(0x64, 0x0E, 0 & 0xFF)
+    write(0x64, 0x0E, (0 >> 8) & 0x0F)
+    write(0x64, 0x10, 4095 & 0xFF)
+    write(0x64, 0x11, (4095 >> 8) & 0x0F)
 
-    write(0x12, 0 & 0xFF)
-    write(0x13, (0 >> 8) & 0x0F)
-    write(0x14, 4095 & 0xFF)
-    write(0x15, (4095 >> 8) & 0x0F)
+    write(0x64, 0x12, 0 & 0xFF)
+    write(0x64, 0x13, (0 >> 8) & 0x0F)
+    write(0x64, 0x14, 4095 & 0xFF)
+    write(0x64, 0x15, (4095 >> 8) & 0x0F)
     } 
 
 
@@ -167,117 +167,117 @@ namespace qcar {
 
    export function QCar_Direction(Car_Direction: Direction): void {
        if (Car_Direction == Direction.foward) {
-           write(0x06, 0 & 0xFF)
-           write(0x07, (0 >> 8) & 0x0F)
-           write(0x08, 4095 & 0xFF)
-           write(0x09, (4095 >> 8) & 0x0F)
+           write(0x64, 0x06, 0 & 0xFF)
+           write(0x64, 0x07, (0 >> 8) & 0x0F)
+           write(0x64, 0x08, 4095 & 0xFF)
+           write(0x64, 0x09, (4095 >> 8) & 0x0F)
             
-           write(0x0A, 4095 & 0xFF)
-           write(0x0B, (4095 >> 8) & 0x0F)
-           write(0x0C, 0 & 0xFF)
-           write(0x0D, (0 >> 8) & 0x0F)
+           write(0x64, 0x0A, 4095 & 0xFF)
+           write(0x64, 0x0B, (4095 >> 8) & 0x0F)
+           write(0x64, 0x0C, 0 & 0xFF)
+           write(0x64, 0x0D, (0 >> 8) & 0x0F)
 
-           write(0x0E, 4095 & 0xFF)
-           write(0x0F, (4095 >> 8) & 0x0F)
-           write(0x10, 0 & 0xFF)
-           write(0x11, (0 >> 8) & 0x0F)
+           write(0x64, 0x0E, 4095 & 0xFF)
+           write(0x64, 0x0F, (4095 >> 8) & 0x0F)
+           write(0x64, 0x10, 0 & 0xFF)
+           write(0x64, 0x11, (0 >> 8) & 0x0F)
 
-           write(0x12, 0 & 0xFF)
-           write(0x13, (0 >> 8) & 0x0F)
-           write(0x14, 4095 & 0xFF)
-           write(0x15, (4095 >> 8) & 0x0F)
+           write(0x64, 0x12, 0 & 0xFF)
+           write(0x64, 0x13, (0 >> 8) & 0x0F)
+           write(0x64, 0x14, 4095 & 0xFF)
+           write(0x64, 0x15, (4095 >> 8) & 0x0F)
         } 
         else if (Car_Direction == Direction.back) {
-            write(0x06, 4095 & 0xFF)
-            write(0x07, (4095 >> 8) & 0x0F)
-            write(0x08, 0 & 0xFF)
-            write(0x09, (0 >> 8) & 0x0F)
+            write(0x64, 0x06, 4095 & 0xFF)
+            write(0x64, 0x07, (4095 >> 8) & 0x0F)
+            write(0x64, 0x08, 0 & 0xFF)
+            write(0x64, 0x09, (0 >> 8) & 0x0F)
             
-            write(0x0A, 0 & 0xFF)
-            write(0x0B, (0 >> 8) & 0x0F)
-            write(0x0C, 4095 & 0xFF)
-            write(0x0D, (4095 >> 8) & 0x0F)
+            write(0x64, 0x0A, 0 & 0xFF)
+            write(0x64, 0x0B, (0 >> 8) & 0x0F)
+            write(0x64, 0x0C, 4095 & 0xFF)
+            write(0x64, 0x0D, (4095 >> 8) & 0x0F)
 
 
-            write(0x0E, 0 & 0xFF)
-            write(0x0F, (0 >> 8) & 0x0F)
-            write(0x10, 4095 & 0xFF)
-            write(0x11, (4095 >> 8) & 0x0F)
+            write(0x64, 0x0E, 0 & 0xFF)
+            write(0x64, 0x0F, (0 >> 8) & 0x0F)
+            write(0x64, 0x10, 4095 & 0xFF)
+            write(0x64, 0x11, (4095 >> 8) & 0x0F)
 
-            write(0x12, 4095 & 0xFF)
-            write(0x13, (4095 >> 8) & 0x0F)
-            write(0x14, 0 & 0xFF)
-            write(0x15, (0  >> 8) & 0x0F)
+            write(0x64, 0x12, 4095 & 0xFF)
+            write(0x64, 0x13, (4095 >> 8) & 0x0F)
+            write(0x64, 0x14, 0 & 0xFF)
+            write(0x64, 0x15, (0  >> 8) & 0x0F)
         } 
         else if (Car_Direction == Direction.left) {
 
-            write(0x06, 0 & 0xFF)
-            write(0x07, (0 >> 8) & 0x0F)
-            write(0x08, 4095 & 0xFF)
-            write(0x09, (4095 >> 8) & 0x0F)
+            write(0x64, 0x06, 0 & 0xFF)
+            write(0x64, 0x07, (0 >> 8) & 0x0F)
+            write(0x64, 0x08, 4095 & 0xFF)
+            write(0x64, 0x09, (4095 >> 8) & 0x0F)
             
-            write(0x0A, 4095 & 0xFF)
-            write(0x0B, (4095 >> 8) & 0x0F)
-            write(0x0C, 0 & 0xFF)
-            write(0x0D, (0 >> 8) & 0x0F)
+            write(0x64, 0x0A, 4095 & 0xFF)
+            write(0x64, 0x0B, (4095 >> 8) & 0x0F)
+            write(0x64, 0x0C, 0 & 0xFF)
+            write(0x64, 0x0D, (0 >> 8) & 0x0F)
 
 
-            write(0x0E, 0 & 0xFF)
-            write(0x0F, (0 >> 8) & 0x0F)
-            write(0x10, 4095 & 0xFF)
-            write(0x11, (4095 >> 8) & 0x0F)
+            write(0x64, 0x0E, 0 & 0xFF)
+            write(0x64, 0x0F, (0 >> 8) & 0x0F)
+            write(0x64, 0x10, 4095 & 0xFF)
+            write(0x64, 0x11, (4095 >> 8) & 0x0F)
 
-            write(0x12, 4095 & 0xFF)
-            write(0x13, (4095 >> 8) & 0x0F)
-            write(0x14, 0 & 0xFF)
-            write(0x15, (0  >> 8) & 0x0F)
+            write(0x64, 0x12, 4095 & 0xFF)
+            write(0x64, 0x13, (4095 >> 8) & 0x0F)
+            write(0x64, 0x14, 0 & 0xFF)
+            write(0x64, 0x15, (0  >> 8) & 0x0F)
         
         } 
         else if (Car_Direction == Direction.right) {
 
-            write(0x06, 4095 & 0xFF)
-            write(0x07, (4095 >> 8) & 0x0F)
-            write(0x08, 0 & 0xFF)
-            write(0x09, (0 >> 8) & 0x0F)
+            write(0x64, 0x06, 4095 & 0xFF)
+            write(0x64, 0x07, (4095 >> 8) & 0x0F)
+            write(0x64, 0x08, 0 & 0xFF)
+            write(0x64, 0x09, (0 >> 8) & 0x0F)
             
-            write(0x0A, 0 & 0xFF)
-            write(0x0B, (0 >> 8) & 0x0F)
-            write(0x0C, 4095 & 0xFF)
-            write(0x0D, (4095 >> 8) & 0x0F)
+            write(0x64, 0x0A, 0 & 0xFF)
+            write(0x64, 0x0B, (0 >> 8) & 0x0F)
+            write(0x64, 0x0C, 4095 & 0xFF)
+            write(0x64, 0x0D, (4095 >> 8) & 0x0F)
 
 
-            write(0x0E, 4095 & 0xFF)
-            write(0x0F, (4095 >> 8) & 0x0F)
-            write(0x10, 0 & 0xFF)
-            write(0x11, (0 >> 8) & 0x0F)
+            write(0x64, 0x0E, 4095 & 0xFF)
+            write(0x64, 0x0F, (4095 >> 8) & 0x0F)
+            write(0x64, 0x10, 0 & 0xFF)
+            write(0x64, 0x11, (0 >> 8) & 0x0F)
     
-            write(0x12, 0 & 0xFF)
-            write(0x13, (0 >> 8) & 0x0F)
-            write(0x14, 4095 & 0xFF)
-            write(0x15, (4095 >> 8) & 0x0F)
+            write(0x64, 0x12, 0 & 0xFF)
+            write(0x64, 0x13, (0 >> 8) & 0x0F)
+            write(0x64, 0x14, 4095 & 0xFF)
+            write(0x64, 0x15, (4095 >> 8) & 0x0F)
         } 
         else if (Car_Direction == Direction.stop) {
 
             // Low byte of onStep
-            write(0x06, 0 & 0xFF)
-            write(0x07, (0 >> 8) & 0x0F)
-            write(0x08, 4095 & 0xFF)
-            write(0x09, (4095 >> 8) & 0x0F)
+            write(0x64, 0x06, 0 & 0xFF)
+            write(0x64, 0x07, (0 >> 8) & 0x0F)
+            write(0x64, 0x08, 4095 & 0xFF)
+            write(0x64, 0x09, (4095 >> 8) & 0x0F)
             
-            write(0x0A, 0 & 0xFF)
-            write(0x0B, (0 >> 8) & 0x0F)
-            write(0x0C, 4095 & 0xFF)
-            write(0x0D, (4095 >> 8) & 0x0F)
+            write(0x64, 0x0A, 0 & 0xFF)
+            write(0x64, 0x0B, (0 >> 8) & 0x0F)
+            write(0x64, 0x0C, 4095 & 0xFF)
+            write(0x64, 0x0D, (4095 >> 8) & 0x0F)
     
-            write(0x0E, 0 & 0xFF)
-            write(0x0F, (0 >> 8) & 0x0F)
-            write(0x10, 4095 & 0xFF)
-            write(0x11, (4095 >> 8) & 0x0F)
+            write(0x64, 0x0E, 0 & 0xFF)
+            write(0x64, 0x0F, (0 >> 8) & 0x0F)
+            write(0x64, 0x10, 4095 & 0xFF)
+            write(0x64, 0x11, (4095 >> 8) & 0x0F)
     
-            write(0x12, 0 & 0xFF)
-            write(0x13, (0 >> 8) & 0x0F)
-            write(0x14, 4095 & 0xFF)
-            write(0x15, (4095 >> 8) & 0x0F)
+            write(0x64, 0x12, 0 & 0xFF)
+            write(0x64, 0x13, (0 >> 8) & 0x0F)
+            write(0x64, 0x14, 4095 & 0xFF)
+            write(0x64, 0x15, (4095 >> 8) & 0x0F)
         } 
     }
 
@@ -290,19 +290,19 @@ namespace qcar {
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
 
-        write(modeRegister1, sleep)
+        write(0x64, modeRegister1, sleep)
 
-        write(PrescaleReg, prescaler)
+        write(0x64, PrescaleReg, prescaler)
 
-        write(allChannelsOnStepLowByte, 0x00)
-        write(allChannelsOnStepHighByte, 0x00)
-        write(allChannelsOffStepLowByte, 0x00)
-        write(allChannelsOffStepHighByte, 0x00)
+        write(0x64, allChannelsOnStepLowByte, 0x00)
+        write(0x64, allChannelsOnStepHighByte, 0x00)
+        write(0x64, allChannelsOffStepLowByte, 0x00)
+        write(0x64, allChannelsOffStepHighByte, 0x00)
 
-        write(modeRegister1, wake)
+        write(0x64, modeRegister1, wake)
 
         control.waitMicros(1000)
-        write(modeRegister1, restart)
+        write(0x64, modeRegister1, restart)
     }
 
 }
