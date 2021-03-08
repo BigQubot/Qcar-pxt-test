@@ -39,7 +39,7 @@ namespace qcar {
     }
 
     
-    function toHexString(n) {
+    function toHexString(n: number) {
         if(n < 0) {
             n = 0xFFFFFFFF + n + 1;
         }
@@ -116,7 +116,7 @@ namespace qcar {
     //% blockGap=2 weight=0 blockExternalInputs=true
     export function areaOfRectangle(length: number, width:number): number {
         length = toHexString(length)
-        width = number(width)
+        width = toHexString(width)
         var test = (length << 8) & width
         return test
     }
