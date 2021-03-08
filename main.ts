@@ -284,7 +284,8 @@ namespace qcar {
     * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs..
     */
 
-    //% blockId=init block="init |%newFreq" advanced=true
+    //% blockId=init block="init |%newFreq"
+    //% weight=60 blockGap=8
     export function init(newFreq: number = 50) {
         const freq = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq)
