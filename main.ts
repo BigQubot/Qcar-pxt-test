@@ -99,7 +99,7 @@ namespace qcar {
     export function areaOfRectangle(length: string, width:string): number {
         length = stripHexPrefix(length)
         width = stripHexPrefix(width)
-        string test = (length << 8) & width
+        var test = (length << 8) & width
         return test
     }
 
