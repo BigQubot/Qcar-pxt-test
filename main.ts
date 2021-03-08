@@ -131,7 +131,7 @@ namespace qcar {
    //% blockId=IR_Enable block="Set the infrared status to |%irstatus"
    //% irstatus.fieldEditor="gridpicker" irstatus.fieldOptions.columns=2 
    //% weight=30 blockGap=8
-    //% group="2. Senser"
+    //% group="1. Senser"
 
    export function IREnable(IRstatus: irstatus): void {
        if (IRstatus == irstatus.iron) {
@@ -148,7 +148,7 @@ namespace qcar {
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.\
      * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
      */
-    //% weight=10 block group="3. Motor"
+    //% weight=10 block group="2. Motor"
     export function initTheMotor() {
         const freq = 50
         const prescaler = calcFreqPrescaler(freq)
@@ -206,7 +206,7 @@ namespace qcar {
 
    //% blockId=Q-Car_Direction block="Let the Q-Car |%Direction"
    //% Direction.fieldEditor="gridpicker" Direction.fieldOptions.columns=5 
-   //% weight=30 blockGap=8  group="3. Motor"
+   //% weight=30 blockGap=8  group="2. Motor"
 
    export function QCar_Direction(Car_Direction: Direction): void {
         if (Car_Direction == Direction.foward) {
@@ -334,7 +334,8 @@ namespace qcar {
     //% blockId=motor_MotorRun block="motor|%index|move|%Dire|at speed|%speed"
     //% speed.min=0 speed.max=100
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2
-    //% direction.fieldEditor="gridpicker" direction.fieldOptions.columns=2
+    //% direction.fieldEditor="gridpicker" direction.fieldOptions.columns=2 
+    //% weight=40 group="2. Motor"
     export function motorRun(index: Motors, direction: Dire, speed: number): void {
         let pulsetime = Math.map(speed, 0, 100, 0, 4095)
         if (index == 0) {
