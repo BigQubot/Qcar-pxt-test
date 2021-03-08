@@ -173,7 +173,7 @@ namespace qcar {
     */
 
    //% blockId=Stop_QCar block="Stop the Q-Car"
-   //% weight=20 blockGap=8 group="3. Motor"
+   //% weight=20 blockGap=8 group="2. Motor"
 
    export function Stop(): void {
 
