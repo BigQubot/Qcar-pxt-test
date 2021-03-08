@@ -167,25 +167,25 @@ namespace qcar {
 
    export function QCar_Direction(Car_Direction: Direction): void {
         if (Car_Direction == Direction.foward) {
-            pins.i2cWriteNumber(0x40, 0x0600, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x0700, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x08FF, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x090F, NumberFormat.Int16BE, false);
+            // pins.i2cWriteNumber(0x40, 0x0600, NumberFormat.Int16BE, false);
+            // pins.i2cWriteNumber(0x40, 0x0700, NumberFormat.Int16BE, false);
+            // pins.i2cWriteNumber(0x40, 0x08FF, NumberFormat.Int16BE, false);
+            // pins.i2cWriteNumber(0x40, 0x090F, NumberFormat.Int16BE, false);
 
             
-            pins.i2cWriteNumber(0x40, 0x0AFF, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x0B0F, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x0C00, NumberFormat.Int16BE, false);
-            pins.i2cWriteNumber(0x40, 0x0D00, NumberFormat.Int16BE, false);
-            // write(0x40, 0x06, 0 & 0xFF)
-            // write(0x40, 0x07, (0 >> 8) & 0x0F)
-            // write(0x40, 0x08, 4095 & 0xFF)
-            // write(0x40, 0x09, (4095 >> 8) & 0x0F)
+            // pins.i2cWriteNumber(0x40, 0x0AFF, NumberFormat.Int16BE, false);
+            // pins.i2cWriteNumber(0x40, 0x0B0F, NumberFormat.Int16BE, false);
+            // pins.i2cWriteNumber(0x40, 0x0C00, NumberFormat.Int16BE, false);
+            // pins.i2cWriteNumber(0x40, 0x0D00, NumberFormat.Int16BE, false);
+            write(0x40, 0x06, 0 & 0xFF)
+            write(0x40, 0x07, (0 >> 8) & 0x0F)
+            write(0x40, 0x08, 4095 & 0xFF)
+            write(0x40, 0x09, (4095 >> 8) & 0x0F)
                 
-            // write(0x40, 0x0A, 4095 & 0xFF)
-            // write(0x40, 0x0B, (4095 >> 8) & 0x0F)
-            // write(0x40, 0x0C, 0 & 0xFF)
-            // write(0x40, 0x0D, (0 >> 8) & 0x0F)
+            write(0x40, 0x0A, 4095 & 0xFF)
+            write(0x40, 0x0B, (4095 >> 8) & 0x0F)
+            write(0x40, 0x0C, 0 & 0xFF)
+            write(0x40, 0x0D, (0 >> 8) & 0x0F)
 
             write(0x40, 0x0E, 4095 & 0xFF)
             write(0x40, 0x0F, (4095 >> 8) & 0x0F)
