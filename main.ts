@@ -61,6 +61,12 @@ namespace qcar {
         Forward = 0,
         //% blockId="Forward" block="Backward"
         Backward = 1
+    }    
+    export enum Motors {
+        //% blockId="left motor" block="left"
+        M1 = 0,
+        //% blockId="right motor" block="right"
+        M2 = 1,
     }
     
 
@@ -332,7 +338,7 @@ namespace qcar {
     export function motorRun(index: Motors, direction: Dire, speed: number): void {
         let pulsetime = Math.map(speed, 0, 10, 0, 4095)
         if (index == 0) {
-            if (direction == Forward) {
+            if (direction == Dire.Forward) {
                 write(0x40, 0x06, 0 & 0xFF)
                 write(0x40, 0x07, (0 >> 8) & 0x0F)
                 write(0x40, 0x08, 0 & 0xFF)
@@ -343,7 +349,7 @@ namespace qcar {
                 write(0x40, 0x0C, pulsetime & 0xFF)
                 write(0x40, 0x0D, (pulsetime >> 8) & 0x0F)
             }
-            if (direction == Backward) {
+            if (direction == Dire.Backward) {
                 write(0x40, 0x06, 0 & 0xFF)
                 write(0x40, 0x07, (0 >> 8) & 0x0F)
                 write(0x40, 0x08, pulsetime & 0xFF)
@@ -355,10 +361,10 @@ namespace qcar {
                 write(0x40, 0x0D, (0 >> 8) & 0x0F)
             }
             if (index == 1) {
-                if (direction == Forward) {
+                if (direction == Dire.Forward) {
 
                 }
-                if (direction == Backward) {
+                if (direction == Dire.Backward) {
 
                 }
             }
