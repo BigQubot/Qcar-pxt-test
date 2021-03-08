@@ -96,8 +96,8 @@ namespace qcar {
     */
     //% blockId="areaOfRectangle" block="area of rectangle length %length|width %width"
     //% blockGap=2 weight=0 blockExternalInputs=true
-    export function areaOfRectangle(length: number, width:number): number {
-        const test = (length << 8) & width
+    export function areaOfRectangle(length: string, width:string): number {
+        string test = (length << 8) & width
         return test
     }
 
